@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0b1326;
+  --foreground: #dae2fd;
+  --surface: #0b1326;
+  --on-surface: #dae2fd;
+  --primary: #c0c1ff;
+  --secondary: #45dfa4;
+  --tertiary: #ffb2b7;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-manrope {
+  font-family: 'Manrope', sans-serif;
+}
+
+/* Glassmorphism - Atmospheric Vault */
+.glass-card {
+  background: rgba(19, 27, 46, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(70, 69, 84, 0.2);
+  border-radius: 1.5rem;
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at 50% -20%, #2f2ebe 0%, #0b1326 70%);
+}
+
+.kinetic-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  background-size: 200% 200%;
+  animation: kinetic-flow 5s ease infinite;
+}
+
+@keyframes kinetic-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.no-line-rule {
+  border: none !important;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold py-3 px-8 rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-300;
+  }
+  
+  .btn-secondary {
+    @apply glass-card text-on-surface font-bold py-3 px-8 rounded-xl hover:bg-white/10 transition-all duration-300;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .signature-texture {
+    @apply backdrop-blur-[20px] bg-surface-container/60;
+  }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1326;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d3449;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #464554;
+}
