@@ -75,7 +75,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               </li>
               <li className="flex items-center gap-2">
                 <Icons.checkCircle />
-                <span>5 parametric triggers (rain, heat, pollution, flood, curfew)</span>
+                <span>9 parametric triggers (rain, heat, pollution, flood, curfew, app outage, demand surge, traffic, strike)</span>
               </li>
               <li className="flex items-center gap-2">
                 <Icons.checkCircle />

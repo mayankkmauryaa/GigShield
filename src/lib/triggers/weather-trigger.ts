@@ -42,6 +42,30 @@ const TRIGGER_THRESHOLDS: Record<TriggerType, TriggerThreshold> = {
     red: 0,
     requiresAlert: true,
   },
+  app_outage: {
+    yellow: 0,
+    orange: 0,
+    red: 0,
+    requiresAlert: true,
+  },
+  demand_surge: {
+    yellow: 0,
+    orange: 0,
+    red: 0,
+    requiresAlert: true,
+  },
+  traffic: {
+    yellow: 60,
+    orange: 80,
+    red: 100,
+    durationHours: 1,
+  },
+  strike: {
+    yellow: 0,
+    orange: 0,
+    red: 0,
+    requiresAlert: true,
+  },
 };
 
 interface TriggerState {
@@ -243,9 +267,13 @@ function calculateHoursAffected(trigger: Trigger): number {
     pollution: 8,
     flood: 12,
     curfew: 10,
+    app_outage: 6,
+    demand_surge: 4,
+    traffic: 8,
+    strike: 10,
   };
 
-  let hours = baseHours[trigger.type];
+  let hours = baseHours[trigger.type] || 8;
 
   if (trigger.severity === 'red') {
     hours *= 1.5;
@@ -263,6 +291,10 @@ function generateClaimDescription(trigger: Trigger): string {
     pollution: 'Severe air quality restricted outdoor work',
     flood: 'Flood conditions made deliveries unsafe',
     curfew: 'Local restrictions prevented access to work areas',
+    app_outage: 'Platform service disruption prevented delivery operations',
+    demand_surge: 'Zone closure by platform caused income loss',
+    traffic: 'Severe traffic congestion blocked delivery routes',
+    strike: 'Local transport strike halted delivery operations',
   };
 
   return `${descriptions[trigger.type]} in ${trigger.location} (${trigger.severity.toUpperCase()} alert)`;

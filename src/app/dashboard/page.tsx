@@ -6,6 +6,7 @@ import { getWorker, getPolicyByWorker, getClaimsByWorker, getWeatherData, getAct
 import { generateRiskInsights, predictWeeklyPayout } from '@/lib/ai/risk-model';
 import { Worker, Policy, Claim, WeatherData, Trigger } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
+import { TriggerWidget } from '@/components/TriggerWidget';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -361,6 +362,11 @@ function DashboardContent() {
               )}
             </section>
           </div>
+        </div>
+
+        {/* Active Triggers Widget - Full Width */}
+        <div className="mb-8 animate-slide-up" style={{ animationDelay: '250ms' }}>
+          <TriggerWidget triggers={triggers} />
         </div>
 
         {/* Recent Claims Table */}

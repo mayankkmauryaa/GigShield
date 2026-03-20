@@ -6,6 +6,8 @@ import { processPayment } from '@/lib/integrations/payment-sim';
 import { analyzeFraud } from '@/lib/ai/fraud-detector';
 import { Claim, Worker, Policy } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
+import { ClaimTimeline, ClaimStatusFlow } from '@/components/ClaimTimeline';
+import { LoadingSpinner } from '@/components/LoadingStates';
 
 export default function ClaimsPage() {
   const [claims, setClaims] = useState<Claim[]>([]);
@@ -231,6 +233,12 @@ export default function ClaimsPage() {
                 <option value="rain">Rain Disruption</option>
                 <option value="heat">Heat Wave</option>
                 <option value="pollution">Pollution Alert</option>
+                <option value="flood">Flood Alert</option>
+                <option value="curfew">Curfew/Lockdown</option>
+                <option value="app_outage">Platform Outage</option>
+                <option value="demand_surge">Demand Surge</option>
+                <option value="traffic">Traffic Disruption</option>
+                <option value="strike">Transport Strike</option>
               </select>
               <select 
                 value={filter}
@@ -368,75 +376,58 @@ export default function ClaimsPage() {
               </div>
             </div>
 
-            <div className="p-8 flex-grow space-y-10">
+            <div className="p-8 flex-grow space-y-6">
               {/* Status Timeline */}
               <div>
-                <h3 className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-8 flex items-center gap-2">
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
                   <span className="material-symbols-outlined text-sm">schedule</span> Status Timeline
                 </h3>
-                <div className="space-y-10 relative before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-white/5">
-                  <div className="flex gap-5 relative">
-                    <div className="w-[24px] h-[24px] rounded-full bg-secondary flex items-center justify-center z-10 shadow-lg shadow-secondary/20">
-                      <span className="material-symbols-outlined text-[12px] text-on-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-black text-white uppercase tracking-widest">Trigger Event Detected</p>
-                      <p className="text-[10px] text-on-surface-variant font-bold mt-1">
-                        {new Date(selectedClaim.triggeredAt).toLocaleString('en-IN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' })} • {selectedClaim.triggerType} Disruption
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-5 relative">
-                    <div className="w-[24px] h-[24px] rounded-full bg-secondary flex items-center justify-center z-10 shadow-lg shadow-secondary/20">
-                      <span className="material-symbols-outlined text-[12px] text-on-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-black text-white uppercase tracking-widest">AI Validation Protocols</p>
-                      <p className="text-[10px] text-on-surface-variant font-bold mt-1">Status: Verified via Parametric Grid</p>
-                    </div>
-                  </div>
+                <ClaimTimeline claim={selectedClaim} />
+              </div>
 
-                  <div className="flex gap-5 relative">
-                    <div className={`w-[24px] h-[24px] rounded-full flex items-center justify-center z-10 shadow-lg ${
-                      selectedClaim.status === 'pending' ? 'bg-primary shadow-primary/20' : 'bg-secondary shadow-secondary/20'
-                    }`}>
-                      <span className={`material-symbols-outlined text-[12px] ${selectedClaim.status === 'pending' ? 'text-on-primary animate-spin-slow' : 'text-on-secondary'}`} style={{ fontVariationSettings: "'FILL' 1" }}>
-                        {selectedClaim.status === 'pending' ? 'sync' : 'check'}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-xs font-black text-white uppercase tracking-widest">
-                        {selectedClaim.status === 'pending' ? 'Governance Review' : 'Policy Compliance'}
-                      </p>
-                      <p className="text-[10px] text-on-surface-variant font-bold mt-1">
-                        {selectedClaim.status === 'pending' ? 'Current State • High Priority Payout' : 'Completed • Protocol Approved'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              {/* Status Flow */}
+              <div className="px-4">
+                <ClaimStatusFlow status={selectedClaim.status} />
               </div>
 
               {/* Fraud Analysis Component */}
-              <div className="p-6 rounded-2xl bg-surface-container-lowest/50 border border-white/5 relative group overflow-hidden">
+              <div className="p-5 rounded-2xl bg-surface-container-lowest/50 border border-white/5 relative group overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-error/5 blur-2xl rounded-full"></div>
-                <div className="flex justify-between items-center mb-5 relative">
+                <div className="flex justify-between items-center mb-4 relative">
                   <h3 className={`text-[10px] font-black uppercase tracking-widest flex items-center gap-2 ${selectedClaim.fraudCheck.score > 20 ? 'text-error' : 'text-secondary'}`}>
                     <span className="material-symbols-outlined text-sm">security</span> Fraud Risk Audit
                   </h3>
-                  <span className={`text-2xl font-black ${selectedClaim.fraudCheck.score > 20 ? 'text-error' : 'text-secondary'}`}>
+                  <span className={`text-xl font-black ${selectedClaim.fraudCheck.score > 20 ? 'text-error' : 'text-secondary'}`}>
                     {selectedClaim.fraudCheck.score}%
                   </span>
                 </div>
-                <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-4 relative">
+                <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3 relative">
                   <div 
                     className={`h-full transition-all duration-1000 ease-out ${selectedClaim.fraudCheck.score > 20 ? 'bg-error' : 'bg-secondary'}`} 
                     style={{ width: `${selectedClaim.fraudCheck.score}%` }}
                   ></div>
                 </div>
-                <p className="text-[10px] text-on-surface-variant font-bold leading-relaxed italic">
-                  Risk Level: <span className="uppercase text-white">{selectedClaim.fraudCheck.level}</span>. {selectedClaim.fraudCheck.flags.length > 0 ? selectedClaim.fraudCheck.flags[0] : 'Proximity and session activity match event timestamp perfectly.'}
-                </p>
+                <div className="space-y-2">
+                  <p className="text-xs text-white font-bold">
+                    Risk Level: <span className={`uppercase ${selectedClaim.fraudCheck.level === 'high' ? 'text-error' : selectedClaim.fraudCheck.level === 'medium' ? 'text-amber-400' : 'text-emerald-400'}`}>
+                      {selectedClaim.fraudCheck.level}
+                    </span>
+                  </p>
+                  {selectedClaim.fraudCheck.flags.length > 0 ? (
+                    <div className="space-y-1">
+                      {selectedClaim.fraudCheck.flags.slice(0, 3).map((flag, idx) => (
+                        <p key={idx} className="text-[10px] text-white/60 flex items-start gap-1">
+                          <span className="material-symbols-outlined text-[10px] text-error mt-0.5">warning</span>
+                          {flag}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-[10px] text-white/50 italic">
+                      All validation checks passed successfully.
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 

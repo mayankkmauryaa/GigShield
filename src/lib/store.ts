@@ -350,4 +350,50 @@ export function getWeatherData(city: string): WeatherData {
   };
 }
 
+export function resetStore(): void {
+  workers.clear();
+  policies.clear();
+  claims.clear();
+  triggers.clear();
+  payments.clear();
+  initializeSampleData();
+}
+
+export function addDemoClaim(workerId: string, triggerType: string, hoursAffected: number): Claim | null {
+  const worker = workers.get(workerId);
+  const policy = Array.from(policies.values()).find(p => p.workerId === workerId);
+  
+  if (!worker || !policy) return null;
+  
+  const claimId = generateId();
+  const claim: Claim = {
+    id: claimId,
+    workerId,
+    policyId: policy.id,
+    triggerId: `trigger-${triggerType}-${Date.now()}`,
+    triggerType: triggerType as any,
+    status: 'pending',
+    fraudCheck: {
+      passed: true,
+      score: 5,
+      flags: [],
+      level: 'none',
+    },
+    payoutAmount: hoursAffected * policy.hourlyRate,
+    hoursAffected,
+    hourlyRate: policy.hourlyRate,
+    description: `Auto-generated claim for ${triggerType} disruption`,
+    location: {
+      lat: worker.location.lat,
+      lng: worker.location.lng,
+      zone: worker.zoneId,
+    },
+    triggeredAt: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+  };
+  
+  claims.set(claimId, claim);
+  return claim;
+}
+
 initializeSampleData();

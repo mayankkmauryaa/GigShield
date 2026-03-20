@@ -7,6 +7,18 @@ import { generateWeatherForecast, calculateZoneRisk } from '@/lib/ai/risk-model'
 import { DashboardStats, Worker, Policy, Claim, Trigger, WeatherData } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
 import { FraudDetectionPanel } from '@/components/FraudDetectionPanel';
+import { AutoClaimNotification, AutoClaimNotificationContainer } from '@/components/AutoClaimNotification';
+
+interface ClaimEvent {
+  id: string;
+  triggerType: string;
+  triggerName: string;
+  location: string;
+  severity: 'yellow' | 'orange' | 'red';
+  affectedWorkers: number;
+  claimsCreated: number;
+  timestamp: Date;
+}
 
 const CITIES = ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Hyderabad', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow'];
 
@@ -19,9 +31,11 @@ export default function AdminPage() {
   const [weather, setWeather] = useState<{ [key: string]: WeatherData }>({});
   const [activeTab, setActiveTab] = useState<'overview' | 'workers' | 'simulation' | 'defense'>('overview');
   const [simulationCity, setSimulationCity] = useState('Mumbai');
-  const [simulationType, setSimulationType] = useState<'rain' | 'heat' | 'pollution'>('rain');
+  const [simulationType, setSimulationType] = useState<'rain' | 'heat' | 'pollution' | 'flood' | 'curfew' | 'app_outage' | 'demand_surge' | 'traffic' | 'strike'>('rain');
   const [simulationSeverity, setSimulationSeverity] = useState<'orange' | 'red'>('red');
   const [simResult, setSimResult] = useState<{ trigger: Trigger | null; claims: Claim[] } | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [claimEvents, setClaimEvents] = useState<ClaimEvent[]>([]);
   const [zoneRisks, setZoneRisks] = useState<ReturnType<typeof calculateZoneRisk>>(CITIES.map(city => ({
     zoneId: city,
     riskScore: 0,
@@ -54,17 +68,48 @@ export default function AdminPage() {
   };
 
   const handleSimulation = () => {
-    const values: { [key: string]: number } = {
-      rain: simulationSeverity === 'red' ? 65 : 45,
-      heat: simulationSeverity === 'red' ? 47 : 42,
-      pollution: simulationSeverity === 'red' ? 350 : 260,
-    };
+    setIsSimulating(true);
+    
+    setTimeout(() => {
+      const values: { [key: string]: number } = {
+        rain: simulationSeverity === 'red' ? 65 : 45,
+        heat: simulationSeverity === 'red' ? 47 : 42,
+        pollution: simulationSeverity === 'red' ? 350 : 260,
+      };
 
-    const result = simulateWeatherEvent(simulationCity, simulationType, simulationSeverity, values[simulationType]);
-    if (result.trigger) {
-      setSimResult(result);
-    }
-    refreshData();
+      const result = simulateWeatherEvent(simulationCity, simulationType, simulationSeverity, values[simulationType]);
+      if (result.trigger) {
+        setSimResult(result);
+        
+        // Add claim event notification
+        const triggerNames: Record<string, string> = {
+          rain: 'Heavy Rain',
+          heat: 'Extreme Heat',
+          pollution: 'Pollution Alert',
+          flood: 'Flood Warning',
+          curfew: 'Curfew Active',
+          strike: 'Transport Strike',
+          app_outage: 'Platform Outage',
+          demand_surge: 'Demand Surge',
+          traffic: 'Traffic Disruption',
+        };
+        
+        const newEvent: ClaimEvent = {
+          id: `event-${Date.now()}`,
+          triggerType: simulationType,
+          triggerName: triggerNames[simulationType] || simulationType,
+          location: simulationCity,
+          severity: simulationSeverity,
+          affectedWorkers: result.claims.length,
+          claimsCreated: result.claims.length,
+          timestamp: new Date(),
+        };
+        
+        setClaimEvents(prev => [...prev, newEvent]);
+      }
+      refreshData();
+      setIsSimulating(false);
+    }, 1500);
   };
 
   const totalPremiums = policies.filter(p => p.status === 'active').reduce((sum, p) => sum + p.weeklyPremium, 0);
@@ -87,6 +132,24 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-surface text-on-surface font-body selection:bg-primary/30">
+      {/* Auto-Claim Notification Container */}
+      <AutoClaimNotificationContainer 
+        events={claimEvents.map(e => ({
+          id: e.id,
+          triggerType: e.triggerType,
+          triggerName: e.triggerName,
+          location: e.location,
+          severity: e.severity,
+          affectedWorkers: e.affectedWorkers,
+          claimsCreated: e.claimsCreated,
+          timestamp: e.timestamp,
+        }))}
+        onDismiss={(id) => setClaimEvents(prev => prev.filter(e => e.id !== id))}
+        onViewClaims={() => {
+          setActiveTab('simulation');
+          setClaimEvents([]);
+        }}
+      />
       <div className="max-w-7xl mx-auto px-8 py-24">
         {/* Page Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 animate-fade-in">
@@ -391,6 +454,12 @@ export default function AdminPage() {
                         <option value="rain">Heavy Precipitation (Rain)</option>
                         <option value="heat">Extreme Thermal Index (Heat)</option>
                         <option value="pollution">Particulate Toxicity (AQI)</option>
+                        <option value="flood">Flood Alert</option>
+                        <option value="curfew">Local Curfew</option>
+                        <option value="app_outage">Platform Outage</option>
+                        <option value="demand_surge">Demand Surge (Zone Block)</option>
+                        <option value="traffic">Traffic Jam</option>
+                        <option value="strike">Transport Strike</option>
                       </select>
                     </div>
 
@@ -409,43 +478,106 @@ export default function AdminPage() {
 
                   <button 
                     onClick={handleSimulation} 
-                    className="w-full py-5 bg-primary text-on-primary rounded-2xl font-black text-sm uppercase tracking-[0.2em] hover:shadow-2xl hover:shadow-primary/30 active:scale-[0.98] transition-all"
+                    disabled={isSimulating}
+                    className="w-full py-5 bg-primary text-on-primary rounded-2xl font-black text-sm uppercase tracking-[0.2em] hover:shadow-2xl hover:shadow-primary/30 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                   >
-                    Invoke Event Simulation
+                    {isSimulating ? (
+                      <>
+                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Simulating...
+                      </>
+                    ) : (
+                      <>
+                        <span className="material-symbols-outlined">bolt</span>
+                        Invoke Event Simulation
+                      </>
+                    )}
                   </button>
 
                   {simResult && (
-                    <div className="mt-10 p-8 rounded-3xl bg-surface-container-low border border-primary/20 animate-slide-up">
-                      <h5 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-6">Simulation Pulse Results</h5>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div className="mt-10 p-8 rounded-3xl bg-gradient-to-br from-surface-container-low to-primary/5 border border-emerald-500/20 animate-slide-up">
+                      {/* Success Header */}
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                          <span className="material-symbols-outlined text-emerald-400" style={{ fontVariationSettings: '"FILL" 1' }}>
+                            check_circle
+                          </span>
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-black text-emerald-400">Simulation Successful</h5>
+                          <p className="text-xs text-white/50">
+                            {simResult.claims.length} workers affected, claims auto-generated
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {simResult.trigger && (
-                          <div className="space-y-4">
-                            <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Trigger Generated</p>
-                            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
-                              <span className="material-symbols-outlined text-4xl text-primary">
-                                {simResult.trigger.type === 'rain' ? 'rainy' : simResult.trigger.type === 'heat' ? 'thermostat' : 'cloud'}
+                          <div className="space-y-3">
+                            <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Trigger Created</p>
+                            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-emerald-500/20">
+                              <span className="material-symbols-outlined text-4xl text-emerald-400">
+                                {simResult.trigger.type === 'rain' ? 'water_drop' : 
+                                 simResult.trigger.type === 'heat' ? 'wb_sunny' : 
+                                 simResult.trigger.type === 'pollution' ? 'cloud_off' : 'warning'}
                               </span>
                               <div>
-                                <p className="font-bold text-on-surface text-sm uppercase">{simResult.trigger.type}</p>
-                                <p className="text-xs text-on-surface-variant">{simResult.trigger.location}</p>
+                                <p className="font-bold text-on-surface text-sm uppercase">{simResult.trigger.type.replace('_', ' ')}</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                                    simResult.trigger.severity === 'red' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
+                                  }`}>
+                                    {simResult.trigger.severity.toUpperCase()}
+                                  </span>
+                                  <span className="text-xs text-white/50">{simResult.trigger.location}</span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         )}
-                        <div className="space-y-4">
-                          <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Payout Ledger Impact</p>
-                          <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex flex-col justify-center h-full">
-                            <p className="text-3xl font-headline font-black text-secondary">{simResult.claims.length}</p>
-                            <p className="text-[10px] font-bold text-on-surface-variant uppercase">Automated Claims Invoiced</p>
+                        <div className="space-y-3">
+                          <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Claims Generated</p>
+                          <div className="p-4 bg-white/5 rounded-2xl border border-emerald-500/20 flex flex-col justify-center h-full">
+                            <div className="flex items-center gap-2">
+                              <p className="text-3xl font-headline font-black text-secondary">{simResult.claims.length}</p>
+                              <span className="material-symbols-outlined text-xl text-emerald-400 animate-bounce">auto_awesome</span>
+                            </div>
+                            <p className="text-[10px] font-bold text-white/50 uppercase mt-1">Auto-Created via AI</p>
                           </div>
                         </div>
-                        <div className="space-y-4">
-                          <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Total Liquidity Exposure</p>
-                          <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex flex-col justify-center h-full">
-                            <p className="text-2xl font-headline font-black text-on-surface">
+                        <div className="space-y-3">
+                          <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Payout Amount</p>
+                          <div className="p-4 bg-white/5 rounded-2xl border border-emerald-500/20 flex flex-col justify-center h-full">
+                            <p className="text-2xl font-headline font-black text-emerald-400">
                               {formatCurrency(simResult.claims.reduce((sum, c) => sum + c.payoutAmount, 0))}
                             </p>
-                            <p className="text-[10px] font-bold text-on-surface-variant uppercase">Projected Disbursement</p>
+                            <p className="text-[10px] font-bold text-white/50 uppercase mt-1">Projected Disbursement</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Processing Timeline */}
+                      <div className="mt-6 p-4 bg-black/20 rounded-xl">
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                          <span className="text-xs font-bold text-emerald-400">Auto-Claim Processing</span>
+                        </div>
+                        <div className="grid grid-cols-4 gap-2 text-center">
+                          <div className="p-2 bg-emerald-500/10 rounded-lg">
+                            <span className="material-symbols-outlined text-emerald-400 text-lg">flash_on</span>
+                            <p className="text-[10px] text-white/60 mt-1">Triggered</p>
+                          </div>
+                          <div className="p-2 bg-emerald-500/10 rounded-lg">
+                            <span className="material-symbols-outlined text-emerald-400 text-lg">description</span>
+                            <p className="text-[10px] text-white/60 mt-1">Claims Created</p>
+                          </div>
+                          <div className="p-2 bg-emerald-500/10 rounded-lg">
+                            <span className="material-symbols-outlined text-emerald-400 text-lg">security</span>
+                            <p className="text-[10px] text-white/60 mt-1">Fraud Check</p>
+                          </div>
+                          <div className="p-2 bg-amber-500/10 rounded-lg">
+                            <span className="material-symbols-outlined text-amber-400 text-lg">schedule</span>
+                            <p className="text-[10px] text-white/60 mt-1">Awaiting Approval</p>
                           </div>
                         </div>
                       </div>

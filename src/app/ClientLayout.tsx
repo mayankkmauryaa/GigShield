@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { AboutModal } from '@/components/AboutModal';
+import { NotificationProvider } from '@/components/NotificationProvider';
 
 function NavbarFallback() {
   return (
@@ -25,19 +26,21 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   const [showAbout, setShowAbout] = useState(false);
 
   return (
-    <div className="min-h-screen bg-surface flex flex-col font-body selection:bg-primary/20 transition-colors duration-500">
-      <Suspense fallback={<NavbarFallback />}>
-        <Navbar onAboutClick={() => setShowAbout(true)} />
-      </Suspense>
-      
-      <main className="flex-1 bg-surface">
-        {children}
-      </main>
-      
-      <Footer />
-      
-      {/* About Modal */}
-      <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
-    </div>
+    <NotificationProvider>
+      <div className="min-h-screen bg-surface flex flex-col font-body selection:bg-primary/20 transition-colors duration-500">
+        <Suspense fallback={<NavbarFallback />}>
+          <Navbar onAboutClick={() => setShowAbout(true)} />
+        </Suspense>
+        
+        <main className="flex-1 bg-surface">
+          {children}
+        </main>
+        
+        <Footer />
+        
+        {/* About Modal */}
+        <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
+      </div>
+    </NotificationProvider>
   );
 }

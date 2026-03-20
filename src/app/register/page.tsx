@@ -270,8 +270,8 @@ export default function RegisterPage() {
                     <div className="space-y-8">
                       <div>
                         <label className="block text-[10px] uppercase tracking-widest font-black text-primary mb-5">Select Your Primary Partner</label>
-                        <div className="grid grid-cols-2 gap-4">
-                          {(['zomato', 'swiggy', 'both'] as const).map(p => (
+                        <div className="grid grid-cols-3 gap-3">
+                          {(['zomato', 'swiggy', 'zepto', 'blinkit', 'amazon', 'dunzo'] as const).map(p => (
                             <button
                               key={p}
                               onClick={() => setFormData(prev => ({ ...prev, platform: p }))}
@@ -282,7 +282,7 @@ export default function RegisterPage() {
                               }`}
                             >
                               <span className="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">
-                                {p === 'zomato' ? 'restaurant' : p === 'swiggy' ? 'delivery_dining' : 'rocket_launch'}
+                                {p === 'zomato' ? 'restaurant' : p === 'swiggy' ? 'delivery_dining' : p === 'zepto' || p === 'blinkit' ? 'shopping_cart' : p === 'amazon' ? 'inventory_2' : 'local_shipping'}
                               </span>
                               <span className="text-[10px] font-black uppercase tracking-widest">{p}</span>
                             </button>

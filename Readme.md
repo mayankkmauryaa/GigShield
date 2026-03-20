@@ -1,5 +1,18 @@
 # GigShield - Parametric Insurance for India's Gig Economy
 
+---
+
+## 📚 Documentation Index
+
+| Document | Description | Status |
+|----------|-------------|--------|
+| **[INDEX.md](INDEX.md)** | Master documentation index | ✅ Complete |
+| **[Phase1.md](Phase1.md)** | Phase 1: Ideation & Foundation | ✅ Complete |
+| **[Phase2.md](Phase2.md)** | Phase 2: Automation & Protection | ✅ Complete |
+| **[Phase3.md](Phase3.md)** | Phase 3: Scale & Optimize | 📋 Planning |
+
+---
+
 ## The Problem We're Solving
 
 India's platform-based delivery partners (Zomato, Swiggy) are the backbone of our digital economy. However, external disruptions such as extreme weather, pollution, and natural disasters can reduce their working hours and cause them to lose **20-30% of their monthly earnings**. Currently, gig workers have no income protection against these uncontrollable events.
@@ -10,7 +23,7 @@ GigShield is a **parametric insurance platform** that safeguards food delivery p
 
 ---
 
-## Persona: Food Delivery Partners (Zomato/Swiggy)
+## Persona: Delivery Partners (Zomato, Swiggy, Zepto, Blinkit, Amazon, Dunzo)
 
 We focus on **food delivery workers** because:
 
@@ -91,6 +104,10 @@ We use **objective, measurable triggers** that automatically initiate claims:
 | **Severe Pollution** | AQI Index | >300 for entire day | Full day |
 | **Flood Alert** | IMD warning | Red/Orange alert | Full day |
 | **Local Curfew** | Government order | Zone lockdown | Pro-rated |
+| **Platform Outage** | App service status | System downtime | Pro-rated |
+| **Demand Surge** | Zone status | Platform block | Pro-rated |
+| **Traffic Disruption** | Traffic index | >80% congestion | Pro-rated |
+| **Transport Strike** | News/announcement | Strike declared | Full day |
 
 ### Trigger Monitoring
 
@@ -98,6 +115,8 @@ We use **objective, measurable triggers** that automatically initiate claims:
 - **IMD Alerts**: Government weather warnings
 - **AQI Monitoring**: Pollution index from CPCB data
 - **Platform API**: Delivery attempt data (simulated)
+- **Traffic Data**: Simulated traffic congestion levels
+- **News API**: Strike and curfew announcements (simulated)
 
 ---
 
@@ -181,7 +200,7 @@ We use **objective, measurable triggers** that automatically initiate claims:
 1. Registration → Phone/Email
 2. KYC Verification → ID upload (simulated)
 3. Location Setup → GPS + Zone selection
-4. Platform Link → Zomato/Swiggy account (mock)
+4. Platform Link → Zomato/Swiggy/Zepto/Blinkit/Amazon/Dunzo account (mock)
 5. Risk Assessment → AI premium calculation
 6. Policy Activation → Weekly subscription start
 7. Coverage Active → Dashboard access
@@ -559,11 +578,41 @@ If you want to add a real database later (PostgreSQL/MongoDB), you would just re
 
 | Phase | Status |
 |-------|--------|
-| **Phase 1** (Seed) | ✅ Ready for submission |
-| **Phase 2** (Scale) | 90% done - needs demo video |
-| **Phase 3** (Soar) | 85% done - needs final video + deck |
+| **Phase 1** (Seed) | ✅ Complete - All deliverables ready |
+| **Phase 2** (Scale) | ✅ Complete - Demo video pending |
+| **Phase 3** (Soar) | 📋 Planning - See Phase3.md |
 
-**What's left mainly**: Recording demo videos and creating pitch deck. The code is complete! 🎯
+---
+
+## 📋 Phase 3 TODO (April 5-17)
+
+### Advanced Fraud Detection
+- [ ] Multi-signal GPS verification
+- [ ] Device fingerprint analysis
+- [ ] Behavioral anomaly detection
+- [ ] Real weather correlation
+
+### Payment Integration
+- [ ] Razorpay test mode setup
+- [ ] Virtual account creation
+- [ ] UPI payout flow
+- [ ] Payment status tracking
+
+### Analytics Dashboard
+- [ ] Loss ratio visualization
+- [ ] Predictive claims modeling
+- [ ] Worker retention metrics
+- [ ] Admin insights panel
+
+### Final Demo
+- [ ] Record 5-minute walkthrough
+- [ ] Host video publicly
+- [ ] Create pitch deck PDF
+- [ ] Final testing
+
+---
+
+### What's Left: Recording demo videos and creating pitch deck. The code is complete! 🎯
 
 ---
 

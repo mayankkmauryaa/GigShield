@@ -255,12 +255,15 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { icon: 'water_drop', title: 'Rain Surge', desc: 'Payout activates when rainfall exceeds 5mm/hr in your active geo-fence.', color: 'text-primary', border: 'hover:border-primary/20' },
-                { icon: 'wb_sunny', title: 'Extreme Heat', desc: 'Triggers at 42°C+ to compensate for mandatory health breaks and slow delivery times.', color: 'text-secondary', border: 'hover:border-secondary/20' },
-                { icon: 'cloud_off', title: 'Pollution Alert', desc: 'Health hazard compensation active when AQI crosses the \'Hazardous\' (300+) threshold.', color: 'text-tertiary', border: 'hover:border-tertiary/20' },
-                { icon: 'speed', title: 'Demand Slump', desc: 'Compensates when overall platform demand drops by 40% in your sector due to local events.', color: 'text-primary', border: 'hover:border-primary/20' },
-                { icon: 'cyclone', title: 'Storm Warning', desc: 'Automatic lock-in for payout when wind speeds exceed 60km/h, ensuring your safety.', color: 'text-secondary', border: 'hover:border-secondary/20' },
-                { icon: 'health_and_safety', title: 'Personal Accident', desc: '24/7 kinetic monitoring for sudden impact detections, triggering immediate emergency support.', color: 'text-tertiary', border: 'hover:border-tertiary/20' },
+                { icon: 'water_drop', title: 'Rain Surge', desc: 'Payout activates when rainfall exceeds 50mm/hr in your zone.', color: 'text-primary', border: 'hover:border-primary/20' },
+                { icon: 'wb_sunny', title: 'Extreme Heat', desc: 'Triggers at 45°C+ for heat-related work restrictions.', color: 'text-secondary', border: 'hover:border-secondary/20' },
+                { icon: 'cloud_off', title: 'Pollution Alert', desc: 'Active when AQI crosses 300 (Hazardous threshold).', color: 'text-tertiary', border: 'hover:border-tertiary/20' },
+                { icon: 'flood', title: 'Flood Alert', desc: 'Automatic payout when government flood warnings issued.', color: 'text-primary', border: 'hover:border-primary/20' },
+                { icon: 'gavel', title: 'Curfew/Lockdown', desc: 'Compensation during local restrictions and zone lockdowns.', color: 'text-secondary', border: 'hover:border-secondary/20' },
+                { icon: 'wifi_off', title: 'Platform Outage', desc: 'Coverage when delivery apps experience service disruption.', color: 'text-tertiary', border: 'hover:border-tertiary/20' },
+                { icon: 'block', title: 'Demand Surge', desc: 'Payout when platform blocks your zone, halting deliveries.', color: 'text-primary', border: 'hover:border-primary/20' },
+                { icon: 'traffic', title: 'Traffic Disruption', desc: 'Compensation during severe traffic jams and road closures.', color: 'text-secondary', border: 'hover:border-secondary/20' },
+                { icon: 'groups', title: 'Transport Strike', desc: 'Coverage during local transport strikes and bandhs.', color: 'text-tertiary', border: 'hover:border-tertiary/20' },
               ].map((trigger, i) => (
                 <div key={i} className={`glass-card p-8 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group border-transparent ${trigger.border}`}>
                   <span className={`material-symbols-outlined ${trigger.color} mb-6 text-3xl`} style={{ fontVariationSettings: '"FILL" 1' }}>{trigger.icon}</span>

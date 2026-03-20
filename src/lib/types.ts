@@ -1,8 +1,8 @@
 export type WorkerStatus = 'active' | 'inactive' | 'suspended';
 export type PolicyStatus = 'active' | 'expired' | 'cancelled' | 'pending';
 export type ClaimStatus = 'pending' | 'approved' | 'rejected' | 'paid' | 'fraud';
-export type TriggerType = 'rain' | 'heat' | 'pollution' | 'flood' | 'curfew';
-export type DeliveryPlatform = 'zomato' | 'swiggy' | 'both';
+export type TriggerType = 'rain' | 'heat' | 'pollution' | 'flood' | 'curfew' | 'app_outage' | 'demand_surge' | 'traffic' | 'strike';
+export type DeliveryPlatform = 'zomato' | 'swiggy' | 'zepto' | 'blinkit' | 'amazon' | 'flipkart' | 'dunzo' | 'both' | 'multiple';
 export type RiskZone = 'low' | 'medium' | 'high';
 export type FraudLevel = 'none' | 'low' | 'medium' | 'high';
 
