@@ -70,7 +70,7 @@ export function Navbar({ onAboutClick }: NavbarProps) {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/register" className="hidden md:block text-indigo-100 font-headline font-bold hover:text-white transition-colors">
+          <Link href="/login" className="hidden md:block text-indigo-100 font-headline font-bold hover:text-white transition-colors">
             Login
           </Link>
           <div className="w-10 h-10 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center cursor-pointer hover:bg-indigo-500/20 transition-all group">

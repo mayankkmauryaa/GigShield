@@ -21,8 +21,8 @@ const indianCities: { city: string; state: string; lat: number; lng: number; ris
 ];
 
 const workerNames = [
-  'Rahul Sharma', 'Priya Patel', 'Arun Kumar', 'sneha Verma', 'Vikram Singh',
-  'Anita Reddy', 'Rajesh Nair', 'Meera Joshi', 'Suresh Yadav', 'Kavita Mishra',
+  'Rahul Sharma', 'Mayank Maurya', 'Arun Kumar', 'Aditya Kumar', 'Vikram Singh',
+  'Anita Reddy', 'Mohit Jadon', 'Mukul Sharma', 'Suresh Yadav', 'Kavita Mishra',
   'Ajay Thakur', 'Deepa Rao', 'Mohan Das', 'Lakshmi Devi', 'Harish Iyer',
 ];
 
