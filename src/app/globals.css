@@ -5,14 +5,54 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* Dark Theme (Default) */
+:root,
+[data-theme="dark"] {
   --background: #0b1326;
   --foreground: #dae2fd;
   --surface: #0b1326;
+  --surface-container-low: #131b2e;
+  --surface-container-lowest: #0d1321;
+  --surface-container-high: #1e293b;
   --on-surface: #dae2fd;
+  --on-surface-variant: #8b9dc4;
   --primary: #c0c1ff;
+  --primary-container: #3b3d8c;
   --secondary: #45dfa4;
+  --secondary-fixed: #45dfa4;
   --tertiary: #ffb2b7;
+  --error: #ff6b6b;
+  --outline: #464554;
+  --outline-variant: #2d3449;
+  
+  /* Additional dark theme colors */
+  --surface-bright: #1a2540;
+  --surface-container: #121b2d;
+  --surface-variant: #1e2533;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --surface: #f8fafc;
+  --surface-container-low: #f1f5f9;
+  --surface-container-lowest: #ffffff;
+  --surface-container-high: #e2e8f0;
+  --on-surface: #0f172a;
+  --on-surface-variant: #64748b;
+  --primary: #4f46e5;
+  --primary-container: #c7d2fe;
+  --secondary: #059669;
+  --tertiary: #ec4899;
+  --error: #dc2626;
+  --outline: #cbd5e1;
+  --outline-variant: #e2e8f0;
+  
+  /* Additional light theme colors */
+  --surface-bright: #ffffff;
+  --surface-container: #f1f5f9;
+  --surface-variant: #e2e8f0;
 }
 
 body {
@@ -20,6 +60,7 @@ body {
   background: var(--background);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-manrope {

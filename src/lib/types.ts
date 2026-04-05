@@ -86,6 +86,7 @@ export interface Claim {
   };
   triggeredAt: string;
   approvedAt?: string;
+  rejectedAt?: string;
   paidAt?: string;
   createdAt: string;
 }

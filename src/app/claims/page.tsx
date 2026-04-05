@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { getClaims, getWorker, updateClaim, getClaimsByWorker, getPolicies, getWorkers } from '@/lib/store';
 import { processPayment } from '@/lib/integrations/payment-sim';
 import { analyzeFraud } from '@/lib/ai/fraud-detector';
+import { advancedFraudCheck, getFraudSummary } from '@/lib/ai/advanced-fraud-detector';
+import { exportClaimsToCSV } from '@/lib/utils/csv-export';
 import { Claim, Worker, Policy } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
 import { ClaimTimeline, ClaimStatusFlow } from '@/components/ClaimTimeline';
@@ -19,6 +21,10 @@ export default function ClaimsPage() {
   const [selectedClaim, setSelectedClaim] = useState<Claim | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [fraudSummary, setFraudSummary] = useState<ReturnType<typeof getFraudSummary> | null>(null);
+  const [selectedClaims, setSelectedClaims] = useState<Set<string>>(new Set());
+  const [showBulkActions, setShowBulkActions] = useState(false);
+  const [dateRange, setDateRange] = useState<{ startDate: string; endDate: string }>({ startDate: '', endDate: '' });
 
   useEffect(() => {
     const allClaims = getClaims();
@@ -38,6 +44,8 @@ export default function ClaimsPage() {
     const policyMap = new Map();
     getPolicies().forEach(p => policyMap.set(p.id, p));
     setPolicies(policyMap);
+
+    setFraudSummary(getFraudSummary());
   }, []);
 
   const filteredClaims = claims.filter(claim => {
@@ -51,6 +59,13 @@ export default function ClaimsPage() {
         worker?.name.toLowerCase().includes(searchLower) ||
         worker?.location.city.toLowerCase().includes(searchLower)
       );
+    }
+    if (dateRange.startDate || dateRange.endDate) {
+      const claimDate = new Date(claim.createdAt);
+      const start = dateRange.startDate ? new Date(dateRange.startDate) : null;
+      const end = dateRange.endDate ? new Date(dateRange.endDate + 'T23:59:59') : null;
+      if (start && claimDate < start) return false;
+      if (end && claimDate > end) return false;
     }
     return true;
   });
@@ -105,11 +120,85 @@ export default function ClaimsPage() {
   };
 
   const handleReject = (claim: Claim) => {
-    const updated = updateClaim(claim.id, { status: 'rejected' });
+    const updated = updateClaim(claim.id, { status: 'rejected', rejectedAt: new Date().toISOString() });
     if (updated) {
       setClaims(prev => prev.map(c => c.id === claim.id ? updated : c));
       setSelectedClaim(updated);
       setNotification({ type: 'error', message: 'Claim rejected.' });
+    }
+  };
+
+  const handleBulkApprove = async () => {
+    const selectedIds = Array.from(selectedClaims);
+    let approved = 0;
+    let flagged = 0;
+
+    for (const claimId of selectedIds) {
+      const claim = claims.find(c => c.id === claimId);
+      if (claim && claim.status === 'pending') {
+        const fraudResult = analyzeFraud(claim);
+        const updated = updateClaim(claimId, {
+          status: fraudResult.passed ? 'approved' : 'fraud',
+          fraudCheck: {
+            passed: fraudResult.passed,
+            score: fraudResult.score,
+            flags: fraudResult.flags,
+            level: fraudResult.level,
+          },
+          approvedAt: new Date().toISOString(),
+        });
+        if (updated) {
+          if (fraudResult.passed) approved++;
+          else flagged++;
+        }
+      }
+    }
+
+    setClaims(getClaims());
+    setSelectedClaims(new Set());
+    setNotification({
+      type: 'success',
+      message: `Bulk approval complete: ${approved} approved, ${flagged} flagged as fraud.`,
+    });
+  };
+
+  const handleBulkReject = () => {
+    const selectedIds = Array.from(selectedClaims);
+    let rejected = 0;
+
+    for (const claimId of selectedIds) {
+      const claim = claims.find(c => c.id === claimId);
+      if (claim && claim.status === 'pending') {
+        const updated = updateClaim(claimId, { status: 'rejected', rejectedAt: new Date().toISOString() });
+        if (updated) rejected++;
+      }
+    }
+
+    setClaims(getClaims());
+    setSelectedClaims(new Set());
+    setNotification({
+      type: 'error',
+      message: `${rejected} claims rejected.`,
+    });
+  };
+
+  const toggleClaimSelection = (claimId: string) => {
+    setSelectedClaims(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(claimId)) {
+        newSet.delete(claimId);
+      } else {
+        newSet.add(claimId);
+      }
+      return newSet;
+    });
+  };
+
+  const selectAllVisible = () => {
+    if (selectedClaims.size === filteredClaims.length) {
+      setSelectedClaims(new Set());
+    } else {
+      setSelectedClaims(new Set(filteredClaims.map(c => c.id)));
     }
   };
 
@@ -251,24 +340,71 @@ export default function ClaimsPage() {
                 <option value="paid">Paid</option>
                 <option value="fraud">Fraudulent</option>
               </select>
+              <button 
+                onClick={() => exportClaimsToCSV(filteredClaims, workers, `gigshield-claims-${new Date().toISOString().split('T')[0]}.csv`)}
+                className="bg-surface-container-lowest border-none focus:ring-1 focus:ring-secondary rounded-xl text-[10px] font-black uppercase tracking-widest px-6 py-4 text-secondary flex items-center gap-2 hover:bg-secondary/10 transition-colors"
+              >
+                <span className="material-symbols-outlined text-sm">download</span>
+                Export CSV
+              </button>
             </div>
           </div>
         </section>
+
+        {/* Bulk Actions Bar */}
+        {selectedClaims.size > 0 && (
+          <div className="mb-6 glass-card p-4 rounded-2xl flex items-center justify-between animate-slide-up bg-primary/5 border border-primary/20">
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-primary">checklist</span>
+              <span className="text-sm font-bold text-on-surface">{selectedClaims.size} claims selected</span>
+            </div>
+            <div className="flex gap-3">
+              <button 
+                onClick={() => handleBulkApprove()}
+                className="px-4 py-2 bg-secondary/20 text-secondary rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-secondary/30 transition-colors flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-sm">check_circle</span>
+                Approve Selected
+              </button>
+              <button 
+                onClick={() => handleBulkReject()}
+                className="px-4 py-2 bg-error/20 text-error rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-error/30 transition-colors flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-sm">cancel</span>
+                Reject Selected
+              </button>
+              <button 
+                onClick={() => { setSelectedClaims(new Set()); setShowBulkActions(false); }}
+                className="px-4 py-2 bg-surface-container-low text-on-surface/60 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-colors"
+              >
+                Clear Selection
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Table & Details Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20">
           {/* Claims Table */}
           <section className="lg:col-span-8 glass-card rounded-2xl overflow-hidden shadow-2xl">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+            <div className="overflow-x-auto min-h-[400px]">
+              <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
                   <tr className="bg-white/5 border-b border-white/5">
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Claim ID</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Date</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Worker</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Trigger</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Amount</th>
-                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Status</th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">
+                      <input 
+                        type="checkbox" 
+                        checked={selectedClaims.size === filteredClaims.length && filteredClaims.length > 0}
+                        onChange={selectAllVisible}
+                        className="w-4 h-4 rounded accent-primary"
+                      />
+                    </th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Claim ID</th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Date</th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Worker</th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Trigger</th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Amount</th>
+                    <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface/50">Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
@@ -280,10 +416,20 @@ export default function ClaimsPage() {
                       return (
                         <tr 
                           key={claim.id} 
-                          onClick={() => setSelectedClaim(claim)}
-                          className={`hover:bg-white/5 transition-all group cursor-pointer border-l-4 ${isSelected ? 'border-primary bg-primary/5' : 'border-transparent'}`}
+                          className={`hover:bg-white/5 transition-all group border-l-4 ${isSelected ? 'border-primary bg-primary/5' : 'border-transparent'}`}
                         >
-                          <td className={`px-6 py-5 font-black text-xs ${isSelected ? 'text-primary' : 'text-on-surface'}`}>
+                          <td className="px-4 py-5">
+                            <input 
+                              type="checkbox" 
+                              checked={selectedClaims.has(claim.id)}
+                              onChange={() => {
+                                toggleClaimSelection(claim.id);
+                                setSelectedClaim(claim);
+                              }}
+                              className="w-4 h-4 rounded accent-primary"
+                            />
+                          </td>
+                          <td className={`px-4 py-5 font-black text-xs cursor-pointer ${isSelected ? 'text-primary' : 'text-on-surface'}`} onClick={() => setSelectedClaim(claim)}>
                             #{claim.id.slice(0, 8).toUpperCase()}
                           </td>
                           <td className="px-6 py-5 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">

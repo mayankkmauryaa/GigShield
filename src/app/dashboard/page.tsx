@@ -7,6 +7,7 @@ import { generateRiskInsights, predictWeeklyPayout } from '@/lib/ai/risk-model';
 import { Worker, Policy, Claim, WeatherData, Trigger } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
 import { TriggerWidget } from '@/components/TriggerWidget';
+import { downloadCertificate } from '@/lib/utils/pdf-generator';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -196,6 +197,119 @@ function DashboardContent() {
           </div>
         </div>
 
+        {/* NEW: Weekly Progress & Active Triggers */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 animate-slide-up" style={{ animationDelay: '150ms' }}>
+          {/* Weekly Progress Card */}
+          <div className="glass-card p-6 rounded-2xl border-white/5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <span className="material-symbols-outlined text-primary">schedule</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-headline font-black text-on-surface">Weekly Progress</h3>
+                <p className="text-[10px] text-on-surface/50 uppercase tracking-widest">Coverage utilization</p>
+              </div>
+            </div>
+            
+            {/* Progress Stats */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="p-4 bg-surface-container-low/50 rounded-2xl">
+                <p className="text-[10px] font-black text-on-surface/50 uppercase tracking-widest mb-2">Hours Worked</p>
+                <p className="text-2xl font-headline font-black text-on-surface">{worker.avgWeeklyHours}</p>
+                <p className="text-[10px] text-on-surface/50">of {policy?.coverageHours || 60} covered</p>
+              </div>
+              <div className="p-4 bg-surface-container-low/50 rounded-2xl">
+                <p className="text-[10px] font-black text-on-surface/50 uppercase tracking-widest mb-2">Hours Protected</p>
+                <p className="text-2xl font-headline font-black text-secondary">{policy?.coverageHours || 60}</p>
+                <p className="text-[10px] text-on-surface/50">total coverage hours</p>
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="space-y-3">
+              <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                <span className="text-on-surface/70">Coverage Used</span>
+                <span className="text-primary">{Math.round((worker.avgWeeklyHours / (policy?.coverageHours || 60)) * 100)}%</span>
+              </div>
+              <div className="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-1000"
+                  style={{ width: `${Math.min((worker.avgWeeklyHours / (policy?.coverageHours || 60)) * 100, 100)}%` }}
+                ></div>
+              </div>
+              <div className="flex justify-between text-[10px] text-on-surface/50">
+                <span>0 hrs</span>
+                <span>{policy?.coverageHours || 60} hrs</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Active Triggers Card */}
+          <div className="glass-card p-6 rounded-2xl border-white/5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-error/10 rounded-lg">
+                <span className="material-symbols-outlined text-error">warning</span>
+              </div>
+              <div>
+                <h3 className="text-lg font-headline font-black text-on-surface">Active Triggers</h3>
+                <p className="text-[10px] text-on-surface/50 uppercase tracking-widest">Current alerts in {worker.location.city}</p>
+              </div>
+            </div>
+
+            {activeTriggerForCity ? (
+              <div className="space-y-4">
+                <div className={`p-4 rounded-2xl border ${
+                  activeTriggerForCity.severity === 'red' 
+                    ? 'bg-error/10 border-error/20' 
+                    : 'bg-amber-500/10 border-amber-500/20'
+                }`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 py-0.5 text-[8px] font-black uppercase rounded ${
+                        activeTriggerForCity.severity === 'red'
+                          ? 'bg-error/20 text-error'
+                          : 'bg-amber-500/20 text-amber-500'
+                      }`}>
+                        {activeTriggerForCity.severity}
+                      </span>
+                      <span className="text-sm font-black text-on-surface uppercase">
+                        {activeTriggerForCity.type} Alert
+                      </span>
+                    </div>
+                    <span className="text-xs text-on-surface/50">
+                      {activeTriggerForCity.currentValue} / {activeTriggerForCity.threshold}
+                    </span>
+                  </div>
+                  <div className="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full rounded-full ${
+                        activeTriggerForCity.severity === 'red' ? 'bg-error' : 'bg-amber-500'
+                      }`}
+                      style={{ width: `${Math.min((activeTriggerForCity.currentValue / activeTriggerForCity.threshold) * 100, 100)}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-[10px] text-on-surface/60 mt-2">
+                    {activeTriggerForCity.type === 'rain' && 'Heavy rainfall detected in your area'}
+                    {activeTriggerForCity.type === 'heat' && 'Extreme temperature conditions active'}
+                    {activeTriggerForCity.type === 'pollution' && 'Air quality has reached unhealthy levels'}
+                    {activeTriggerForCity.type === 'flood' && 'Flood warning in effect for your zone'}
+                  </p>
+                </div>
+                <p className="text-[10px] text-secondary flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm">verified</span>
+                  Claims processing automatically
+                </p>
+              </div>
+            ) : (
+              <div className="p-6 bg-secondary/5 border border-secondary/20 rounded-2xl text-center">
+                <span className="material-symbols-outlined text-secondary text-3xl mb-2">check_circle</span>
+                <p className="text-sm font-bold text-on-surface">No Active Triggers</p>
+                <p className="text-[10px] text-on-surface/50">Your area is clear - work normally</p>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Main Content Area */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 animate-slide-up" style={{ animationDelay: '200ms' }}>
           {/* Left: Policy Card & Forecast */}
@@ -209,8 +323,12 @@ function DashboardContent() {
                       <h2 className="text-2xl font-headline font-black mb-1">Guardian Policy {policy.policyNumber}</h2>
                       <p className="text-on-surface-variant text-sm font-bold">Issued via GigShield Parametric Network</p>
                     </div>
-                    <button className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
-                      View Full Certificate
+                    <button 
+                      onClick={() => downloadCertificate({ worker, policy, recentClaims: claims })}
+                      className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                    >
+                      <span className="material-symbols-outlined text-sm">download</span>
+                      Download Certificate
                     </button>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">

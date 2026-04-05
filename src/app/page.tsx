@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { getDashboardStats, getWeatherData, getActiveTriggers } from '@/lib/store';
 import { DashboardStats, WeatherData, Trigger } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
+import { ChatWidget } from '@/components/ChatWidget';
 
 export default function Home() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [weather, setWeather] = useState<{ [key: string]: WeatherData }>({});
   const [triggers, setTriggers] = useState<Trigger[]>([]);
   const [activeCity, setActiveCity] = useState('Mumbai');
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     setStats(getDashboardStats());
@@ -290,13 +292,16 @@ export default function Home() {
               <Link href="/register" className="px-12 py-5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-2xl shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
                 Register My Gear
               </Link>
-              <button className="px-12 py-5 border border-outline-variant/30 text-on-surface font-bold rounded-2xl hover:bg-white/5 transition-all">
+              <button onClick={() => setShowChat(true)} className="px-12 py-5 border border-outline-variant/30 text-on-surface font-bold rounded-2xl hover:bg-white/5 transition-all flex items-center gap-2">
+                <span className="material-symbols-outlined">support_agent</span>
                 Talk to an Agent
               </button>
             </div>
           </div>
         </section>
       </main>
+
+      <ChatWidget isOpen={showChat} onClose={() => setShowChat(false)} />
     </div>
   );
 }

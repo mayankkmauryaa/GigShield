@@ -6,12 +6,14 @@ import { DocModal } from './DocModal';
 import { PrivacyModal } from './PrivacyModal';
 import { TermsModal } from './TermsModal';
 import { SupportModal } from './SupportModal';
+import { HelpModal } from './HelpModal';
 
 export function Footer() {
   const [showDoc, setShowDoc] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   return (
     <footer className="w-full py-20 px-8 mt-auto border-t border-white/5 bg-surface relative overflow-hidden">
@@ -59,6 +61,7 @@ export function Footer() {
           <h4 className="font-headline font-bold text-sm uppercase tracking-widest text-indigo-300/80">Resources</h4>
           <ul className="space-y-4">
             <li><button onClick={() => setShowDoc(true)} className="text-on-surface/60 hover:text-indigo-300 transition-colors text-sm font-body text-left">Documentation</button></li>
+            <li><button onClick={() => setShowHelp(true)} className="text-on-surface/60 hover:text-indigo-300 transition-colors text-sm font-body text-left">Help Center</button></li>
             <li><button onClick={() => setShowPrivacy(true)} className="text-on-surface/60 hover:text-indigo-300 transition-colors text-sm font-body text-left">Privacy Policy</button></li>
             <li><button onClick={() => setShowTerms(true)} className="text-on-surface/60 hover:text-indigo-300 transition-colors text-sm font-body text-left">Terms of Service</button></li>
             <li><button onClick={() => setShowSupport(true)} className="text-on-surface/60 hover:text-indigo-300 transition-colors text-sm font-body text-left">Support Center</button></li>
@@ -80,6 +83,7 @@ export function Footer() {
       <PrivacyModal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)} />
       <TermsModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
       <SupportModal isOpen={showSupport} onClose={() => setShowSupport(false)} />
+      <HelpModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
     </footer>
   );
 }

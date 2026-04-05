@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getDashboardStats, getWorkers, getPolicies, getClaims, getTriggers, getWeatherData, createTrigger, getActiveTriggers } from '@/lib/store';
 import { simulateWeatherEvent, getTriggerSummary } from '@/lib/triggers/weather-trigger';
 import { generateWeatherForecast, calculateZoneRisk } from '@/lib/ai/risk-model';
+import { calculatePlatformMetrics, predictWeeklyClaims, getWeeklyTrend, getFraudAlerts, getTopRiskCities } from '@/lib/ai/predictive-analytics';
 import { DashboardStats, Worker, Policy, Claim, Trigger, WeatherData } from '@/lib/types';
 import { formatCurrency } from '@/lib/integrations/payment-sim';
 import { FraudDetectionPanel } from '@/components/FraudDetectionPanel';
@@ -42,6 +43,11 @@ export default function AdminPage() {
     riskLevel: 'low' as const,
     recommendation: '',
   })));
+  const [platformMetrics, setPlatformMetrics] = useState<ReturnType<typeof calculatePlatformMetrics> | null>(null);
+  const [weeklyPrediction, setWeeklyPrediction] = useState<ReturnType<typeof predictWeeklyClaims> | null>(null);
+  const [weeklyTrend, setWeeklyTrend] = useState<ReturnType<typeof getWeeklyTrend> | null>(null);
+  const [fraudAlerts, setFraudAlerts] = useState<ReturnType<typeof getFraudAlerts> | null>(null);
+  const [topRiskCities, setTopRiskCities] = useState<ReturnType<typeof getTopRiskCities>>([]);
 
   useEffect(() => {
     refreshData();
@@ -65,6 +71,13 @@ export default function AdminPage() {
       ? [...new Set(workers.map(w => w.location.city))]
       : CITIES;
     setZoneRisks(calculateZoneRisk(allZones));
+
+    // Load analytics data
+    setPlatformMetrics(calculatePlatformMetrics());
+    setWeeklyPrediction(predictWeeklyClaims());
+    setWeeklyTrend(getWeeklyTrend());
+    setFraudAlerts(getFraudAlerts());
+    setTopRiskCities(getTopRiskCities());
   };
 
   const handleSimulation = () => {
@@ -532,9 +545,174 @@ export default function AdminPage() {
                                   <span className="text-xs text-white/50">{simResult.trigger.location}</span>
                                 </div>
                               </div>
-                            </div>
+                </div>
+
+                {/* NEW: Platform Metrics Cards */}
+                {platformMetrics && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="glass-card p-4 rounded-2xl border-white/5 bg-gradient-to-br from-secondary/5 to-surface">
+                      <p className="text-[10px] font-black text-secondary uppercase tracking-widest mb-2">Loss Ratio</p>
+                      <p className="text-2xl font-headline font-black text-on-surface">{platformMetrics.lossRatio.toFixed(1)}%</p>
+                    </div>
+                    <div className="glass-card p-4 rounded-2xl border-white/5 bg-gradient-to-br from-error/5 to-surface">
+                      <p className="text-[10px] font-black text-error uppercase tracking-widest mb-2">Fraud Rate</p>
+                      <p className="text-2xl font-headline font-black text-on-surface">{platformMetrics.fraudRate.toFixed(1)}%</p>
+                    </div>
+                    <div className="glass-card p-4 rounded-2xl border-white/5 bg-gradient-to-br from-primary/5 to-surface">
+                      <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-2">Profit Margin</p>
+                      <p className="text-2xl font-headline font-black text-on-surface">{platformMetrics.profitMargin.toFixed(1)}%</p>
+                    </div>
+                    <div className="glass-card p-4 rounded-2xl border-white/5 bg-gradient-to-br from-tertiary/5 to-surface">
+                      <p className="text-[10px] font-black text-tertiary uppercase tracking-widest mb-2">Avg Claim</p>
+                      <p className="text-2xl font-headline font-black text-on-surface">{formatCurrency(platformMetrics.avgClaimValue)}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* NEW: Weekly Trend Chart */}
+                {weeklyTrend && (
+                  <div className="glass-card p-8 rounded-3xl border-white/5">
+                    <div className="flex justify-between items-center mb-8">
+                      <div>
+                        <h4 className="text-lg font-headline font-black text-on-surface">Weekly Premium Trend</h4>
+                        <p className="text-xs text-on-surface-variant font-medium">Last 8 weeks growth analysis</p>
+                      </div>
+                    </div>
+                    <div className="flex items-end gap-2 h-32">
+                      {weeklyTrend.labels.map((label, idx) => (
+                        <div key={label} className="flex-1 flex flex-col items-center gap-2">
+                          <div className="w-full bg-primary/30 rounded-t-lg relative" style={{ height: `${(weeklyTrend.premiums[idx] / Math.max(...weeklyTrend.premiums.filter(p => p > 0), 1)) * 100}%` }}>
+                            <div className="absolute bottom-0 w-full bg-secondary/50 rounded-t-lg" style={{ height: `${(weeklyTrend.payouts[idx] / Math.max(...weeklyTrend.payouts.filter(p => p > 0), 1)) * 100}%` }}></div>
                           </div>
-                        )}
+                          <span className="text-[10px] text-on-surface/50 font-black uppercase">{label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-center gap-6 mt-4">
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 bg-primary rounded-full"></span>
+                        <span className="text-[10px] text-on-surface/70 font-bold uppercase">Premium</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-3 h-3 bg-secondary/50 rounded-full"></span>
+                        <span className="text-[10px] text-on-surface/70 font-bold uppercase">Payout</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* NEW: Predictive Analytics */}
+                {weeklyPrediction && (
+                  <div className="glass-card p-8 rounded-3xl border-white/5">
+                    <div className="flex justify-between items-center mb-8">
+                      <div>
+                        <h4 className="text-lg font-headline font-black text-on-surface">Predictive Analytics</h4>
+                        <p className="text-xs text-on-surface-variant font-medium">Next 7-day forecast</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${
+                        weeklyPrediction.weekly.riskLevel === 'high' ? 'bg-error/20 text-error' :
+                        weeklyPrediction.weekly.riskLevel === 'medium' ? 'bg-amber-500/20 text-amber-500' :
+                        'bg-secondary/20 text-secondary'
+                      }`}>
+                        {weeklyPrediction.weekly.riskLevel} Risk
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="p-4 bg-surface-container-low/50 rounded-2xl border border-white/5">
+                        <p className="text-[10px] font-black text-on-surface/50 uppercase tracking-widest mb-2">Expected Claims</p>
+                        <p className="text-2xl font-headline font-black text-on-surface">{weeklyPrediction.weekly.totalExpectedClaims}</p>
+                      </div>
+                      <div className="p-4 bg-surface-container-low/50 rounded-2xl border border-white/5">
+                        <p className="text-[10px] font-black text-on-surface/50 uppercase tracking-widest mb-2">Est. Payout</p>
+                        <p className="text-2xl font-headline font-black text-on-surface">{formatCurrency(weeklyPrediction.weekly.totalEstimatedPayout)}</p>
+                      </div>
+                      <div className="p-4 bg-surface-container-low/50 rounded-2xl border border-white/5">
+                        <p className="text-[10px] font-black text-on-surface/50 uppercase tracking-widest mb-2">Confidence Range</p>
+                        <p className="text-lg font-headline font-black text-on-surface">{formatCurrency(weeklyPrediction.weekly.confidenceInterval.low)} - {formatCurrency(weeklyPrediction.weekly.confidenceInterval.high)}</p>
+                      </div>
+                    </div>
+                    {weeklyPrediction.recommendations.length > 0 && (
+                      <div className="p-4 bg-primary/5 border border-primary/10 rounded-2xl">
+                        <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-2">AI Recommendations</p>
+                        <div className="space-y-1">
+                          {weeklyPrediction.recommendations.slice(0, 3).map((rec, idx) => (
+                            <p key={idx} className="text-xs text-on-surface/70">{rec}</p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* NEW: Fraud Alerts */}
+                {fraudAlerts && (
+                  <div className="glass-card p-8 rounded-3xl border-white/5">
+                    <div className="flex justify-between items-center mb-8">
+                      <div>
+                        <h4 className="text-lg font-headline font-black text-on-surface">Fraud Alerts</h4>
+                        <p className="text-xs text-on-surface-variant font-medium">Security monitoring</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="p-4 bg-error/10 rounded-2xl border border-error/20 text-center">
+                        <p className="text-2xl font-headline font-black text-error">{fraudAlerts.high}</p>
+                        <p className="text-[10px] font-black text-error uppercase tracking-widest">High Risk</p>
+                      </div>
+                      <div className="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20 text-center">
+                        <p className="text-2xl font-headline font-black text-amber-500">{fraudAlerts.medium}</p>
+                        <p className="text-[10px] font-black text-amber-500 uppercase tracking-widest">Medium</p>
+                      </div>
+                      <div className="p-4 bg-secondary/10 rounded-2xl border border-secondary/20 text-center">
+                        <p className="text-2xl font-headline font-black text-secondary">{fraudAlerts.low}</p>
+                        <p className="text-[10px] font-black text-secondary uppercase tracking-widest">Low</p>
+                      </div>
+                    </div>
+                    {fraudAlerts.recentAlerts.length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-[10px] font-black text-on-surface/50 uppercase tracking-widest mb-2">Recent Activity</p>
+                        {fraudAlerts.recentAlerts.slice(0, 3).map((alert, idx) => (
+                          <div key={idx} className="p-3 bg-surface-container-low/50 rounded-xl text-xs text-on-surface/70 flex items-center gap-2">
+                            <span className="material-symbols-outlined text-error text-sm">warning</span>
+                            {alert}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* NEW: Top Risk Cities */}
+                {topRiskCities.length > 0 && (
+                  <div className="glass-card p-8 rounded-3xl border-white/5">
+                    <div className="flex justify-between items-center mb-8">
+                      <div>
+                        <h4 className="text-lg font-headline font-black text-on-surface">Top Risk Cities</h4>
+                        <p className="text-xs text-on-surface-variant font-medium">Highest claim activity zones</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      {topRiskCities.slice(0, 5).map((cityRisk, idx) => (
+                        <div key={cityRisk.city} className="flex items-center justify-between p-4 bg-surface-container-low/50 rounded-2xl border border-white/5">
+                          <div className="flex items-center gap-4">
+                            <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-black text-primary">{idx + 1}</span>
+                            <span className="text-sm font-bold text-on-surface">{cityRisk.city}</span>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <span className="text-xs text-on-surface/50 uppercase">{cityRisk.trigger}</span>
+                            <span className={`text-sm font-black ${
+                              cityRisk.riskScore > 50 ? 'text-error' :
+                              cityRisk.riskScore > 25 ? 'text-amber-500' : 'text-secondary'
+                            }`}>
+                              {cityRisk.riskScore.toFixed(0)}%
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
                         <div className="space-y-3">
                           <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Claims Generated</p>
                           <div className="p-4 bg-white/5 rounded-2xl border border-emerald-500/20 flex flex-col justify-center h-full">
