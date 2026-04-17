@@ -2,6 +2,50 @@
 
 ---
 
+## 🚀 How to Run Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/mayankkmauryaa/GigShield.git
+cd GigShield
+
+# Install dependencies
+npm install
+
+# Create .env.local file (for Razorpay integration)
+# Add these to .env.local:
+# RAZORPAY_KEY_ID=rzp_test_your_key_id
+# RAZORPAY_KEY_SECRET=your_key_secret
+
+# Run development server
+npm run dev
+
+# Open http://localhost:3000
+```
+
+**Tech Stack**: Next.js 14, TypeScript, Tailwind CSS, Razorpay API, Recharts
+
+---
+
+## 🎥 Demo Videos
+
+| Phase       | Description                       | Duration | YouTube Link                          |
+| ----------- | --------------------------------- | -------- | ------------------------------------- |
+| **Phase 1** | Concept & Ideation                | 2:34     | [Watch](https://youtu.be/nXAqkrPjMeM) |
+| **Phase 2** | Working Platform Demo             | 3:06     | [Watch](https://youtu.be/jW-hAUoWFaU) |
+| **Phase 3** | Advanced Features & Real Payments | 2:38     | [Watch](https://youtu.be/V7PTZBvqGlM) |
+
+## 📊 Pitch Deck
+
+- [PitchDeck.md](PitchDeck.md) (Markdown)
+- [Google Drive PDF](https://drive.google.com/file/d/1tGszytpt0CESXsvIiIBxOROCvWh969d/view?usp=sharing)
+- [Local PDF](GigShield_Pitch_Deck.pdf)
+
+**Live App**: https://gig-shield.vercel.app
+**GitHub**: https://github.com/mayankkmauryaa/GigShield
+
+---
+
 ## 📚 Documentation Index
 
 | Document                   | Description                      | Status      |
