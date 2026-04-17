@@ -8,24 +8,20 @@ Join a 45-day live startup game where teams earn,
 spend, and invest credits while building real-world
 InsurTech solutions powered by AI.
 
-
 Welcome to DEVTrails
 A virtual university hackathon launched in 2025 that challenges students with real, industry-grade problems and sparks innovation at scale. It connects emerging talent with Guidewire engineers, offering hands-on experience with Enterprise Cloud, AI Technologies, and the Guidewire Tech Stack.
 
-A ₹6,00,000 prize pool is up for grabs!  |   Win cash prizes and exciting rewards!  |   Registration: February 10 – February 27  |  Hackathon: March 4 – April 17
+A ₹6,00,000 prize pool is up for grabs! | Win cash prizes and exciting rewards! | Registration: February 10 – February 27 | Hackathon: March 4 – April 17
 Why Participate
 
 Real Impact
 Experience an 8-week, end-to-end product development lifecycle.
 
-
 Beyond the Build
 Join a 10,000+ strong community and walk away with swag, rewards, recognition, and certificates for all participants.
 
-
 Expert Access
 Learn directly from Guidewire’s InsurTech experts and India’s leading insurance education institute, NIA.
-
 
 Industry Exposure
 Top 5 teams present their solutions at DevSummit Bangalore to 40+ tech giants, InsurTech product heads, Guidewire experts, and 3,000+ industry professionals.
@@ -60,7 +56,6 @@ Grand Finale at DevSummit Bangalore, where the top 5 teams present and be reward
 Play to Win
 Prize details for the teams that make it to the top.
 
-
 1st Place
 ₹2.5L
 
@@ -74,7 +69,6 @@ Recognition Award for Excellence
 ₹1L
 ( Awarded to selected finalist teams )
 
-
 All Participants
 Certificate
 Inside
@@ -87,13 +81,11 @@ Image
 University Collaboration Opportunity
 Logo
 
-
 Logo
 A Look Back at DEVTrails 2025
 Relive the energy, innovation, and standout moments from last year.
 
 DEVTrails 2025 was more than a hackathon, it became a movement of ideas, collaboration, and real-world problem solving. Over 45 days, thousands of students tackled deep InsurTech challenges, built solutions with AI and cloud tech, and connected across campuses and communities. From vibrant team energy and shared workshops to the electric finale at DEVSummit, watch the moments that defined the journey and set a new standard for innovation.
-
 
 FAQs
 Who can participate?
@@ -110,7 +102,6 @@ solving hands-on industry-driven challenges.
 
 Follow us
 in
-
 
 Contact us
 © 2026 Guidewire. All Rights Reserved
@@ -166,7 +157,6 @@ Your service request has been rejected by admin
 
 4 days ago
 Mayank Maurya
-
 
 dashboard
 Dashboard
@@ -293,7 +283,6 @@ Your service request has been rejected by admin
 4 days ago
 Mayank Maurya
 
-
 dashboard
 Dashboard
 leaderboard
@@ -341,105 +330,105 @@ Team Performance Overview
 Real-time performance metrics by active groups
 search
 Search teams...
-Team	Members	DC Coins	Tier
+Team Members DC Coins Tier
 Code Mavens
 5
-1,51,000	
+1,51,000
 diamond
 Diamond
 Astro Bugs
 4
-1,41,700	
+1,41,700
 diamond
 Diamond
 VChamps
 5
-1,39,200	
+1,39,200
 diamond
 Diamond
 Romit Deokar
 5
-1,37,200	
+1,37,200
 diamond
 Diamond
 Carbon
 5
-1,37,100	
+1,37,100
 diamond
 Diamond
 Vibecoders.exe
 5
-1,37,100	
+1,37,100
 diamond
 Diamond
 Sudo Shutdown
 4
-1,36,300	
+1,36,300
 diamond
 Diamond
 KOTAPOTHULA SIVA RAGA ADITHI
 4
-1,35,100	
+1,35,100
 diamond
 Diamond
 VisionX
 5
-1,35,100	
+1,35,100
 diamond
 Diamond
 TechTrio
 3
-1,34,800	
+1,34,800
 diamond
 Diamond
 Bool Sheet
 5
-1,34,700	
+1,34,700
 diamond
 Diamond
 Zero Noise Crew
 5
-1,33,700	
+1,33,700
 diamond
 Diamond
 DevXFive
 5
-1,33,600	
+1,33,600
 diamond
 Diamond
 The tech incubaters
 3
-1,33,100	
+1,33,100
 diamond
 Diamond
 Innoverse
 4
-1,32,200	
+1,32,200
 diamond
 Diamond
 HackDragonz
 5
-1,31,600	
+1,31,600
 diamond
 Diamond
 AlphaNexus
 3
-1,31,200	
+1,31,200
 diamond
 Diamond
 Astra Karma
 5
-1,31,200	
+1,31,200
 diamond
 Diamond
 Greeninja
 5
-1,30,800	
+1,30,800
 diamond
 Diamond
 DEEP NEURALS
 5
-1,30,200	
+1,30,200
 diamond
 Diamond
 Showing 1 to 20 of 1380
@@ -507,7 +496,6 @@ A new announcement "Phase: Scale – Coffee Chat on Insurance, Innovation & What
 3 days ago
 Mayank Maurya
 
-
 dashboard
 Dashboard
 leaderboard
@@ -531,52 +519,47 @@ Manage and Track your Service Requests for DEVTrails University Hackathon 2026.
 
 search
 Search requests...
-Service Type	Requested Reason	Admin Reason	DC Coins	Status
+Service Type Requested Reason Admin Reason DC Coins Status
 Other
-Mar 31, 2026 - 03:04 PM	
-my points are decreasing without reason, give me more points 
+Mar 31, 2026 - 03:04 PM
+my points are decreasing without reason, give me more points
 
 Not applicable request
 
-+10,000	
++10,000
 REJECTED
 Market Crash False
-Mar 30, 2026 - 12:03 AM	
--
-Market Crash False	-8,000	
-APPROVED
-Weekly Deductions (Scale)
-Mar 30, 2026 - 12:00 AM	
--
-Weekly Deductions (Scale)	-12,000	
-APPROVED
-Seed Submission Rating - 4 Star
-Mar 27, 2026 - 05:28 PM	
--
--	+32,000	
-APPROVED
-Weekly Deductions (Seed)
-Mar 23, 2026 - 12:00 AM	
--
-Weekly Deductions (Seed)	-5,000	
-APPROVED
-Weekly Deductions (Seed)
-Mar 16, 2026 - 12:00 AM	
--
-Weekly Deductions (Seed)	-5,000	
-APPROVED
-Quiz
-Mar 12, 2026 - 06:08 PM	
--
-Week1 Quiz Earned	+7,200	
-APPROVED
-Weekly Deductions (Seed)
-Mar 09, 2026 - 12:00 AM	
--
-Weekly Deductions (Seed)	-5,000	
-APPROVED
+Mar 30, 2026 - 12:03 AM
 
----
+- Market Crash False -8,000
+  APPROVED
+  Weekly Deductions (Scale)
+  Mar 30, 2026 - 12:00 AM
+- Weekly Deductions (Scale) -12,000
+  APPROVED
+  Seed Submission Rating - 4 Star
+  Mar 27, 2026 - 05:28 PM
+-
+- +32,000
+  APPROVED
+  Weekly Deductions (Seed)
+  Mar 23, 2026 - 12:00 AM
+- Weekly Deductions (Seed) -5,000
+  APPROVED
+  Weekly Deductions (Seed)
+  Mar 16, 2026 - 12:00 AM
+- Weekly Deductions (Seed) -5,000
+  APPROVED
+  Quiz
+  Mar 12, 2026 - 06:08 PM
+- Week1 Quiz Earned +7,200
+  APPROVED
+  Weekly Deductions (Seed)
+  Mar 09, 2026 - 12:00 AM
+- Weekly Deductions (Seed) -5,000
+  APPROVED
+
+  ***
 
 Logo
 In Partnership with
@@ -623,7 +606,6 @@ A new announcement "Phase: Scale – Coffee Chat on Insurance, Innovation & What
 
 3 days ago
 Mayank Maurya
-
 
 dashboard
 Dashboard
@@ -716,7 +698,6 @@ A new announcement "Phase: Scale – Coffee Chat on Insurance, Innovation & What
 3 days ago
 Mayank Maurya
 
-
 dashboard
 Dashboard
 leaderboard
@@ -743,7 +724,6 @@ Download PDF
 Use Case
 Download PDF
 
-
 ---
 
 Logo
@@ -764,7 +744,6 @@ Mark all as read
 No new notifications
 
 Mayank Maurya
-
 
 dashboard
 Dashboard
@@ -810,9 +789,9 @@ Teams that demonstrate genuinely original ideas , the kind that make evaluators 
 
 This hackathon exists to surface builders who can think differently. Phase 2 is where you prove that it's you. Build something only your team could have made.
 
-Good luck, 
+Good luck,
 
-Happy Hacking! 
+Happy Hacking!
 
 The DevTrails Team
 
@@ -821,19 +800,15 @@ Others
 Note on CTF submission
 Hi all,
 
-
 The CTF evaluation is fully automated, so we’re unable to make any changes once a submission is made. If any information is entered incorrectly, it cannot be corrected from our end.
 
 Please ask your teams to carefully verify all details before submitting. This includes ensuring the correct team name (without spelling errors) and using the same email ID that was provided during registration. Even if we receive emails requesting corrections afterward, we won’t be able to accommodate them.
 
 Kindly share this information with your university students participating in Phase 2.
 
-You points you can see reflecting starting Monday(April 6th, 2026).  
+You points you can see reflecting starting Monday(April 6th, 2026).
 
 Thank you!
-
-
- 
 
 celebration
 Event
@@ -845,19 +820,17 @@ Time: 6:00 PM – 7:30 PM
 
 Prerequisite: Please ensure that Docker CLI is installed and set up on your system beforehand, as it will be required during the challenge.
 
- The GhostLabs Inc. dev server was pushed to production without cleanup.
+The GhostLabs Inc. dev server was pushed to production without cleanup.
 
 Your mission: get inside the container and find all 5 hidden flags. (refer the doc below)
 
- Everything you need is in the attached in this document : here
+Everything you need is in the attached in this document : here
 
- Flags have decay points — first team to submit gets maximum points.
- 
+Flags have decay points — first team to submit gets maximum points.
 
 Important: Submissions will be considered one per team. Teams are expected to coordinate internally and avoid making multiple submissions for the same challenge.
 
-
- Move fast. Good luck.
+Move fast. Good luck.
 
 priority_high
 Reminder
@@ -872,9 +845,6 @@ Last date for submission: April 4, 2026.
 Any incorrect Git repository or video link submitted in the respective fields will lead to disqualification.
 
 Thanks !
-
-
- 
 
 sync
 Others
@@ -911,7 +881,6 @@ Mark all as read
 No new notifications
 
 Mayank Maurya
-
 
 dashboard
 Dashboard
@@ -953,7 +922,6 @@ Enter your team summary
 Quiz Completed
 0/0
 
-
 ---
 
 Logo
@@ -974,7 +942,6 @@ Mark all as read
 No new notifications
 
 Mayank Maurya
-
 
 dashboard
 Dashboard
@@ -1044,136 +1011,137 @@ environmental conditions. The solution should provide automated coverage and
 payouts, incorporate intelligent fraud detection mechanisms, and operate on a simple
 weekly pricing model aligned with the typical earnings cycle of gig workers.
 Critical Constraints:
+
 1. You must strictly exclude coverage for health, life, accidents, or vehicle repairs.
 2. Your financial model must be structured on a Weekly pricing basis to match the
-typical payout cycle of a gig worker.
-Core Disruptions to Address (Indicative Examples for Your
-Persona)
-IMPORTANT NOTE ON DISRUPTIONS: The disruptions mentioned below are
-indicative examples of external factors causing income loss. Teams MUST use their
-own ideation to identify the most relevant external disruption parameters for their
-chosen delivery segment.
-Disruption Type Examples (Adapt for
-YOUR Persona)
-Impact (Loss of Income)
-Environmental Extreme heat, Heavy
-rain, Floods, Severe
-Pollution
-Cannot work outdoors /
-Deliveries halted
-Social Unplanned curfews,
-local strikes, sudden
-market/zone closures
-Inability to access
-pickup/drop locations
-Note: You are insuring the INCOME lost during these events, not the cost of fixing
-external issues (e.g., no vehicle repair payouts).
-Technical Requirements
-Must-Have Features (Indicative Guidelines)
-IMPORTANT NOTE: Evaluate what genuinely helps YOUR consumers.
-● AI-Powered Risk Assessment
-○ Dynamic premium calculation (Must be structured as a Weekly pricing
-model)
-○ Predictive risk modeling specific to the persona
-● Intelligent Fraud Detection
-○ Anomaly detection in claims
-○ Location and activity validation
-○ Duplicate claim prevention
-● Parametric Automation
-○ Real-time trigger monitoring
-○ Automatic claim initiation for identified disruptions
-○ Instant payout processing for lost income
-● Integration Capabilities
-○ Weather APIs (can use free tiers or mocks)
-○ Traffic data (mocks acceptable)
-○ Platform APIs (simulated is acceptable)
-○ Payment systems (mock/sandbox/trial versions acceptable)
-Note: These are the must have features. But the teams are free to ideate, innovate and
-bring in other perspectives on top.
-Deliverable Expectations
-Your solution should demonstrate at least the below:
-● Optimized onboarding for your delivery persona.
-● Risk profiling using relevant AI/ML.
-● Policy creation with appropriate pricing structured on a Weekly basis.
-● Claim triggering through relevant parametric events (Loss of income triggers
-only).
-● Payout processing via appropriate channels.
-● Analytics dashboard showing relevant metrics.
-6-Week Journey & Problem Breakdown
-Over the next 6 weeks, you will build an AI-powered, parametric insurance platform
-designed exclusively for platform-based Delivery Partners. Your mission is to protect
-their livelihoods from uncontrollable external disruptions (weather, app crashes,
-curfews) that cause immediate loss of daily wages.
-THE GOLDEN RULES (Read Before Starting)
-1. Persona Focus: You must choose only delivery partners sub-category: Food
-(Zomato/Swiggy), E-commerce (Amazon/Flipkart), or Grocery/Q-Commerce
-(Zepto/Blinkit) and so on.
-2. Coverage Scope: LOSS OF INCOME ONLY. You are building a safety net for
-lost hours/wages. You must strictly exclude features for vehicle repairs, health
-insurance, or accident medical bills.
-3. Weekly Pricing: Gig workers operate week-to-week. Your financial/premium
-model must be structured on a Weekly basis.
-Timeline Overview
-Phase 1 [March 4 - 20]: Ideation & Foundation (Weeks 1-2)
-Theme: "Ideate & Know Your Delivery Worker" This phase is dedicated to research,
-ideation, planning, and building the foundational elements of your solution.
-Submission Deadline for Phase 1 Deliverables: March 20, End of Day.
-Deliverables:
-1. The Idea Document
-● A concise readme document in your Github Repository outlining your core
-strategy covering the below:
-○ Detail out the requirement with persona based scenarios and the workflow
-for your application.
-○ Explain how your Weekly premium model works, define your parametric
-triggers, and justify your choice between a Web or Mobile platform.
-○ Detail your plans of integrating AI/ML into the workflow (Premium
-calculation, Fraud Detection and so on).
-○ Outline your tech stack and development plan.
-○ Anything else that you think is relevant.
-● A link to your Git repository (GitHub/GitLab) consisting of the Readme.md file.
-The same repo to be used for the subsequent phases.
-● A 2-minute video uploaded to a publicly accessible link., outlining your strategy,
-plan of execution and your prototype with minimal scope defined for this phase.
-Phase 2 [March 21 - April 4]: Automation & Protection (Weeks 3-4)
-Theme: "Protect Your Worker"
-Deliverables:
-● A 2-minute demo video uploaded to a publicly accessible link.
-● Executable source code and solution submitted should showcase the below:
-○ Registration Process
-○ Insurance Policy Management
-○ Dynamic Premium Calculation
-○ Claims Management
-Tips:
-● AI Integration Example: Dynamic Pricing Models. Use Machine Learning to
-adjust the Weekly premium based on hyper-local risk factors (e.g., the model
-charges ₹2 less per week if the worker operates in a zone historically safe from
-water logging, or dynamically offers increased coverage hours based on
-predictive weather modelling).
-● Build 3-5 automated triggers using public/mock APIs to identify the disruptions
-leading to loss of income.
-● A seamless, zero-touch claim process. What would be the best User Experience
-for your customers?
-Phase 3 [April 5 - 17]: Scale & Optimise (Weeks 5-6)
-Theme: "Perfect for Your Worker"
-Deliverables:
-● Advanced Fraud Detection: Catch delivery-specific fraud (e.g., GPS spoofing,
-fake weather claims using historical data).
-● Instant Payout System (Simulated): Integrate mock payment gateways
-(Razorpay test mode, Stripe sandbox, or UPI simulators) to demonstrate how the
-worker receives their lost wages instantly.
-● Intelligent Dashboard.
-○ For Workers: Earnings protected, active weekly coverage.
-○ For Insurers (Admin): Loss ratios, predictive analytics on next week's likely
-weather/disruption claims.
-● The Final Submission Package. Consolidate your 6 weeks of development into
-the final artefacts required for Week 6 judging. You must upload:
-○ A 5-minute demo video: A screen-capture walkthrough video of your
-platform in action uploaded to a publicly accessible link. You must visually
-demonstrate a simulated external disruption (e.g., triggering a fake
-rainstorm) and show the automated AI claim approval and payout process.
-○ Final Pitch Deck: Your presentation slides (PDF) covering your specific
-delivery persona, your AI & fraud architecture, and the business viability of
-your Weekly pricing model.
+   typical payout cycle of a gig worker.
+   Core Disruptions to Address (Indicative Examples for Your
+   Persona)
+   IMPORTANT NOTE ON DISRUPTIONS: The disruptions mentioned below are
+   indicative examples of external factors causing income loss. Teams MUST use their
+   own ideation to identify the most relevant external disruption parameters for their
+   chosen delivery segment.
+   Disruption Type Examples (Adapt for
+   YOUR Persona)
+   Impact (Loss of Income)
+   Environmental Extreme heat, Heavy
+   rain, Floods, Severe
+   Pollution
+   Cannot work outdoors /
+   Deliveries halted
+   Social Unplanned curfews,
+   local strikes, sudden
+   market/zone closures
+   Inability to access
+   pickup/drop locations
+   Note: You are insuring the INCOME lost during these events, not the cost of fixing
+   external issues (e.g., no vehicle repair payouts).
+   Technical Requirements
+   Must-Have Features (Indicative Guidelines)
+   IMPORTANT NOTE: Evaluate what genuinely helps YOUR consumers.
+   ● AI-Powered Risk Assessment
+   ○ Dynamic premium calculation (Must be structured as a Weekly pricing
+   model)
+   ○ Predictive risk modeling specific to the persona
+   ● Intelligent Fraud Detection
+   ○ Anomaly detection in claims
+   ○ Location and activity validation
+   ○ Duplicate claim prevention
+   ● Parametric Automation
+   ○ Real-time trigger monitoring
+   ○ Automatic claim initiation for identified disruptions
+   ○ Instant payout processing for lost income
+   ● Integration Capabilities
+   ○ Weather APIs (can use free tiers or mocks)
+   ○ Traffic data (mocks acceptable)
+   ○ Platform APIs (simulated is acceptable)
+   ○ Payment systems (mock/sandbox/trial versions acceptable)
+   Note: These are the must have features. But the teams are free to ideate, innovate and
+   bring in other perspectives on top.
+   Deliverable Expectations
+   Your solution should demonstrate at least the below:
+   ● Optimized onboarding for your delivery persona.
+   ● Risk profiling using relevant AI/ML.
+   ● Policy creation with appropriate pricing structured on a Weekly basis.
+   ● Claim triggering through relevant parametric events (Loss of income triggers
+   only).
+   ● Payout processing via appropriate channels.
+   ● Analytics dashboard showing relevant metrics.
+   6-Week Journey & Problem Breakdown
+   Over the next 6 weeks, you will build an AI-powered, parametric insurance platform
+   designed exclusively for platform-based Delivery Partners. Your mission is to protect
+   their livelihoods from uncontrollable external disruptions (weather, app crashes,
+   curfews) that cause immediate loss of daily wages.
+   THE GOLDEN RULES (Read Before Starting)
+3. Persona Focus: You must choose only delivery partners sub-category: Food
+   (Zomato/Swiggy), E-commerce (Amazon/Flipkart), or Grocery/Q-Commerce
+   (Zepto/Blinkit) and so on.
+4. Coverage Scope: LOSS OF INCOME ONLY. You are building a safety net for
+   lost hours/wages. You must strictly exclude features for vehicle repairs, health
+   insurance, or accident medical bills.
+5. Weekly Pricing: Gig workers operate week-to-week. Your financial/premium
+   model must be structured on a Weekly basis.
+   Timeline Overview
+   Phase 1 [March 4 - 20]: Ideation & Foundation (Weeks 1-2)
+   Theme: "Ideate & Know Your Delivery Worker" This phase is dedicated to research,
+   ideation, planning, and building the foundational elements of your solution.
+   Submission Deadline for Phase 1 Deliverables: March 20, End of Day.
+   Deliverables:
+6. The Idea Document
+   ● A concise readme document in your Github Repository outlining your core
+   strategy covering the below:
+   ○ Detail out the requirement with persona based scenarios and the workflow
+   for your application.
+   ○ Explain how your Weekly premium model works, define your parametric
+   triggers, and justify your choice between a Web or Mobile platform.
+   ○ Detail your plans of integrating AI/ML into the workflow (Premium
+   calculation, Fraud Detection and so on).
+   ○ Outline your tech stack and development plan.
+   ○ Anything else that you think is relevant.
+   ● A link to your Git repository (GitHub/GitLab) consisting of the Readme.md file.
+   The same repo to be used for the subsequent phases.
+   ● A 2-minute video uploaded to a publicly accessible link., outlining your strategy,
+   plan of execution and your prototype with minimal scope defined for this phase.
+   Phase 2 [March 21 - April 4]: Automation & Protection (Weeks 3-4)
+   Theme: "Protect Your Worker"
+   Deliverables:
+   ● A 2-minute demo video uploaded to a publicly accessible link.
+   ● Executable source code and solution submitted should showcase the below:
+   ○ Registration Process
+   ○ Insurance Policy Management
+   ○ Dynamic Premium Calculation
+   ○ Claims Management
+   Tips:
+   ● AI Integration Example: Dynamic Pricing Models. Use Machine Learning to
+   adjust the Weekly premium based on hyper-local risk factors (e.g., the model
+   charges ₹2 less per week if the worker operates in a zone historically safe from
+   water logging, or dynamically offers increased coverage hours based on
+   predictive weather modelling).
+   ● Build 3-5 automated triggers using public/mock APIs to identify the disruptions
+   leading to loss of income.
+   ● A seamless, zero-touch claim process. What would be the best User Experience
+   for your customers?
+   Phase 3 [April 5 - 17]: Scale & Optimise (Weeks 5-6)
+   Theme: "Perfect for Your Worker"
+   Deliverables:
+   ● Advanced Fraud Detection: Catch delivery-specific fraud (e.g., GPS spoofing,
+   fake weather claims using historical data).
+   ● Instant Payout System (Simulated): Integrate mock payment gateways
+   (Razorpay test mode, Stripe sandbox, or UPI simulators) to demonstrate how the
+   worker receives their lost wages instantly.
+   ● Intelligent Dashboard.
+   ○ For Workers: Earnings protected, active weekly coverage.
+   ○ For Insurers (Admin): Loss ratios, predictive analytics on next week's likely
+   weather/disruption claims.
+   ● The Final Submission Package. Consolidate your 6 weeks of development into
+   the final artefacts required for Week 6 judging. You must upload:
+   ○ A 5-minute demo video: A screen-capture walkthrough video of your
+   platform in action uploaded to a publicly accessible link. You must visually
+   demonstrate a simulated external disruption (e.g., triggering a fake
+   rainstorm) and show the automated AI claim approval and payout process.
+   ○ Final Pitch Deck: Your presentation slides (PDF) covering your specific
+   delivery persona, your AI & fraud architecture, and the business viability of
+   your Weekly pricing model.
 
 ---
 
@@ -1347,4 +1315,3 @@ Eliminated Bankrupt or cut at end-of-phase. Gone. —
 Every phase, the bottom 25% gets eliminated. The leaderboard isn't just for bragging rights, it
 decides who lives and who dies. Stay out of Bronze.
 Build fast. Spend smart. Don't go broke. Happy Hacking.
-

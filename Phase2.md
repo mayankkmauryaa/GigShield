@@ -23,16 +23,20 @@
 ## 1. Overview
 
 ### What We Did
+
 Polished and demonstrated the complete automation flow for GigShield, showcasing how workers are protected from income loss through parametric triggers, automatic claim creation, and instant payouts.
 
 ### Why We Did It
+
 Phase 2 required demonstrating a working product with:
+
 - Complete registration to policy workflow
 - Dynamic premium calculation in action
 - Automated trigger system with 3-5+ triggers
 - Zero-touch claim processing
 
 ### How We Did It
+
 - Enhanced existing features for better demo experience
 - Created visible automation indicators
 - Added real-time feedback mechanisms
@@ -44,23 +48,23 @@ Phase 2 required demonstrating a working product with:
 
 ### What Was Already Built
 
-| Feature | Phase 1 Status | Phase 2 Enhancement |
-|---------|---------------|-------------------|
-| Registration Wizard | ✅ Complete | ✅ Enhanced |
-| Premium Calculation | ✅ Complete | ✅ Optimized |
-| Worker Dashboard | ✅ Complete | ✅ New widgets |
-| Claims Management | ✅ Complete | ✅ Better UX |
-| Admin Dashboard | ✅ Complete | ✅ Simulation |
-| Fraud Detection | ✅ Complete | ✅ Extended |
+| Feature             | Phase 1 Status | Phase 2 Enhancement |
+| ------------------- | -------------- | ------------------- |
+| Registration Wizard | ✅ Complete    | ✅ Enhanced         |
+| Premium Calculation | ✅ Complete    | ✅ Optimized        |
+| Worker Dashboard    | ✅ Complete    | ✅ New widgets      |
+| Claims Management   | ✅ Complete    | ✅ Better UX        |
+| Admin Dashboard     | ✅ Complete    | ✅ Simulation       |
+| Fraud Detection     | ✅ Complete    | ✅ Extended         |
 
 ### What Was Missing
 
-| Item | Phase 1 Gap | Phase 2 Fix |
-|------|------------|-------------|
-| Demo Video | Not recorded | ✅ To be recorded |
-| Auto-Claim UI | Backend only | ✅ Visible indicators |
-| Trigger Visibility | Minimal | ✅ Dashboard widget |
-| Workflow Demo | Conceptual | ✅ Full walkthrough |
+| Item               | Phase 1 Gap  | Phase 2 Fix           |
+| ------------------ | ------------ | --------------------- |
+| Demo Video         | Not recorded | ✅ To be recorded     |
+| Auto-Claim UI      | Backend only | ✅ Visible indicators |
+| Trigger Visibility | Minimal      | ✅ Dashboard widget   |
+| Workflow Demo      | Conceptual   | ✅ Full walkthrough   |
 
 ---
 
@@ -71,6 +75,7 @@ Phase 2 required demonstrating a working product with:
 **What**: Added 4 new parametric triggers
 
 **Why**:
+
 - Problem statement required environmental AND social disruptions
 - Different triggers for different disruption types
 - More comprehensive coverage demonstration
@@ -83,8 +88,12 @@ const TRIGGER_THRESHOLDS = {
   rain: { yellow: 25, orange: 40, red: 50 },
   heat: { yellow: 40, orange: 43, red: 45 },
   pollution: { yellow: 200, orange: 250, red: 300 },
-  flood: { /* alert-based */ },
-  curfew: { /* alert-based */ },
+  flood: {
+    /* alert-based */
+  },
+  curfew: {
+    /* alert-based */
+  },
 };
 
 // AFTER (Phase 2)
@@ -92,12 +101,22 @@ const TRIGGER_THRESHOLDS = {
   rain: { yellow: 25, orange: 40, red: 50 },
   heat: { yellow: 40, orange: 43, red: 45 },
   pollution: { yellow: 200, orange: 250, red: 300 },
-  flood: { /* alert-based */ },
-  curfew: { /* alert-based */ },
-  app_outage: { /* alert-based */ },        // NEW
-  demand_surge: { /* alert-based */ },      // NEW
-  traffic: { yellow: 60, orange: 80, red: 100 },  // NEW
-  strike: { /* alert-based */ },             // NEW
+  flood: {
+    /* alert-based */
+  },
+  curfew: {
+    /* alert-based */
+  },
+  app_outage: {
+    /* alert-based */
+  }, // NEW
+  demand_surge: {
+    /* alert-based */
+  }, // NEW
+  traffic: { yellow: 60, orange: 80, red: 100 }, // NEW
+  strike: {
+    /* alert-based */
+  }, // NEW
 };
 ```
 
@@ -110,29 +129,39 @@ const TRIGGER_THRESHOLDS = {
 **What**: Extended delivery platform support
 
 **Why**:
+
 - Problem statement listed multiple platforms
 - Different platforms have different risk profiles
 - Realistic for Indian gig economy
 
 **Platforms Added**:
 
-| Platform | Category | Risk Profile |
-|----------|----------|--------------|
-| Zomato | Food Delivery | High (outdoor work) |
-| Swiggy | Food Delivery | High (outdoor work) |
-| Zepto | Grocery/Q-Commerce | Medium (quick deliveries) |
-| Blinkit | Grocery/Q-Commerce | Medium (quick deliveries) |
-| Amazon | E-commerce | High (heavy parcels) |
-| Dunzo | Quick Commerce | Medium (bike delivery) |
+| Platform | Category           | Risk Profile              |
+| -------- | ------------------ | ------------------------- |
+| Zomato   | Food Delivery      | High (outdoor work)       |
+| Swiggy   | Food Delivery      | High (outdoor work)       |
+| Zepto    | Grocery/Q-Commerce | Medium (quick deliveries) |
+| Blinkit  | Grocery/Q-Commerce | Medium (quick deliveries) |
+| Amazon   | E-commerce         | High (heavy parcels)      |
+| Dunzo    | Quick Commerce     | Medium (bike delivery)    |
 
 **Code Changes**:
 
 ```typescript
 // BEFORE
-type DeliveryPlatform = 'zomato' | 'swiggy' | 'both';
+type DeliveryPlatform = "zomato" | "swiggy" | "both";
 
 // AFTER
-type DeliveryPlatform = 'zomato' | 'swiggy' | 'zepto' | 'blinkit' | 'amazon' | 'flipkart' | 'dunzo' | 'both' | 'multiple';
+type DeliveryPlatform =
+  | "zomato"
+  | "swiggy"
+  | "zepto"
+  | "blinkit"
+  | "amazon"
+  | "flipkart"
+  | "dunzo"
+  | "both"
+  | "multiple";
 ```
 
 **Code Location**: `src/lib/types.ts`, `src/app/register/page.tsx`
@@ -144,11 +173,13 @@ type DeliveryPlatform = 'zomato' | 'swiggy' | 'zepto' | 'blinkit' | 'amazon' | '
 **What**: Full trigger simulation in admin panel
 
 **Why**:
+
 - Need to demonstrate trigger → claim flow
 - Can't wait for real weather events
 - Required for demo video
 
 **Simulation Flow**:
+
 ```
 Admin Action → Trigger Created → Auto-Claims Generated → Fraud Check → Status Update
      ↓              ↓                  ↓                    ↓              ↓
@@ -156,6 +187,7 @@ Admin Action → Trigger Created → Auto-Claims Generated → Fraud Check → S
 ```
 
 **UI Elements Added**:
+
 - City selector (10 cities)
 - Trigger type dropdown (9 types)
 - Severity selector (orange/red)
@@ -170,6 +202,7 @@ Admin Action → Trigger Created → Auto-Claims Generated → Fraud Check → S
 **What**: Updated claims filter with all trigger types
 
 **Why**:
+
 - Better organization of claims
 - Easy to find specific claim types
 - Required for demo walkthrough
@@ -207,6 +240,7 @@ Admin Action → Trigger Created → Auto-Claims Generated → Fraud Check → S
 **What**: System auto-creates claims when trigger activates
 
 **Why**:
+
 - Problem statement: "zero-touch claim process"
 - Workers shouldn't have to file claims manually
 - Faster payout, better UX
@@ -216,37 +250,37 @@ Admin Action → Trigger Created → Auto-Claims Generated → Fraud Check → S
 ```typescript
 export function processAutomaticClaims(trigger: Trigger): Claim[] {
   const createdClaims: Claim[] = [];
-  
+
   // 1. Get all active policies
   const policies = getPolicies();
-  
+
   // 2. Filter by:
   //    - Active policy status
   //    - Worker in affected city
   //    - Policy covers this trigger type
-  
-  policies.forEach(policy => {
-    if (policy.status !== 'active') return;
+
+  policies.forEach((policy) => {
+    if (policy.status !== "active") return;
     if (!trigger.affectedWorkers.includes(policy.workerId)) return;
-    
+
     // 3. Calculate payout
     const hoursAffected = calculateHoursAffected(trigger);
     const payoutAmount = hoursAffected * policy.hourlyRate;
-    
+
     // 4. Create claim with fraud check
     const claim = createClaim(claimData);
     const fraudResult = analyzeFraud(claim);
-    
+
     // 5. Auto-approve if fraud check passes
     if (fraudResult.passed) {
-      updateClaim(claim.id, { status: 'approved' });
+      updateClaim(claim.id, { status: "approved" });
     } else {
-      updateClaim(claim.id, { status: 'fraud' });
+      updateClaim(claim.id, { status: "fraud" });
     }
-    
+
     createdClaims.push(claim);
   });
-  
+
   return createdClaims;
 }
 ```
@@ -260,6 +294,7 @@ export function processAutomaticClaims(trigger: Trigger): Claim[] {
 **What**: Dynamic calculation of coverage hours based on trigger
 
 **Why**:
+
 - Different triggers affect work differently
 - Severity affects duration
 - Fair payout calculation
@@ -270,26 +305,26 @@ export function processAutomaticClaims(trigger: Trigger): Claim[] {
 function calculateHoursAffected(trigger: Trigger): number {
   // Base hours by trigger type
   const baseHours = {
-    rain: 8,      // Rain stops outdoor work
-    heat: 6,      // Heat limits afternoon work
+    rain: 8, // Rain stops outdoor work
+    heat: 6, // Heat limits afternoon work
     pollution: 8, // Pollution restricts all day
-    flood: 12,    // Flood = no work
-    curfew: 10,   // Restricted hours
-    app_outage: 6,    // Can't work
-    demand_surge: 4,  // Partial work
-    traffic: 8,      // Slowed work
-    strike: 10,       // Can't commute
+    flood: 12, // Flood = no work
+    curfew: 10, // Restricted hours
+    app_outage: 6, // Can't work
+    demand_surge: 4, // Partial work
+    traffic: 8, // Slowed work
+    strike: 10, // Can't commute
   };
-  
+
   let hours = baseHours[trigger.type] || 8;
-  
+
   // Severity multiplier
-  if (trigger.severity === 'red') {
+  if (trigger.severity === "red") {
     hours *= 1.5; // 150% payout
-  } else if (trigger.severity === 'orange') {
+  } else if (trigger.severity === "orange") {
     hours *= 1.25; // 125% payout
   }
-  
+
   return Math.round(hours);
 }
 ```
@@ -398,6 +433,7 @@ Demo Action:
 **What**: Real-time premium calculation during registration
 
 **Why**:
+
 - Workers see exact cost before commitment
 - Factors update based on selections
 - Builds trust through transparency
@@ -437,6 +473,7 @@ Seasonal Adjustment:
 ```
 
 **Example Calculation**:
+
 ```
 Worker: Rahul, Mumbai, High Risk Zone, ₹18k/week, 60hrs
 Base: ₹75
@@ -458,31 +495,31 @@ Final Premium: ₹75 + ₹11 + ₹8 - ₹5 + ₹15 = ₹104/week
 analyzeFraud(claim) {
   // Check 1: Claim Frequency
   if (claims > 3 in 30 days) flag += 25
-  
+
   // Check 2: Payout Amount
   if (payout > 2x average) flag += 20
-  
+
   // Check 3: New Worker
   if (registered < 7 days) flag += 30
-  
+
   // Check 4: Behavior Score
   if (score < 60) flag += 15
-  
+
   // Check 5: Ring Fraud
   if (similar claims > 3) flag += 35
-  
+
   // Check 6: Zone History
   if (zone fraud rate > 10%) flag += 15
-  
+
   // Check 7: Timing
   if (unusual hours) flag += 10
-  
+
   // Check 8: Hours Claimed
   if (hours > 12) flag += 15
-  
+
   // Check 9: GPS Distance
   if (distance > 10km) flag += 25
-  
+
   // Final Score
   if (total >= 60) level = 'high'
   if (total >= 35) level = 'medium'
@@ -497,13 +534,13 @@ analyzeFraud(claim) {
 
 ### 7.1 Recording Checklist
 
-| Item | Status | Notes |
-|------|--------|-------|
-| Demo Script | ✅ Ready | 2-minute flow |
+| Item             | Status     | Notes         |
+| ---------------- | ---------- | ------------- |
+| Demo Script      | ✅ Ready   | 2-minute flow |
 | Screen Recording | ⏳ Pending | Need OBS/Loom |
-| Voice Over | ⏳ Pending | Optional |
-| Background Music | ⏳ Pending | Optional |
-| Video Editing | ⏳ Pending | For polish |
+| Voice Over       | ⏳ Pending | Optional      |
+| Background Music | ⏳ Pending | Optional      |
+| Video Editing    | ⏳ Pending | For polish    |
 
 ### 7.2 Demo Script
 
@@ -556,23 +593,23 @@ analyzeFraud(claim) {
 
 ### 8.1 Functional Testing
 
-| Feature | Test Case | Expected Result | Status |
-|---------|-----------|----------------|--------|
-| Registration | Complete 4-step flow | Redirect to dashboard | ✅ |
-| Premium Calc | Mumbai, high risk | Premium in ₹65-85 range | ✅ |
-| Trigger Sim | Rain in Delhi | Trigger created | ✅ |
-| Auto-Claim | Worker in affected city | Claim auto-created | ✅ |
-| Fraud Check | High-risk claim | Marked as fraud | ✅ |
-| Payment | Approve pending claim | Status = paid | ✅ |
+| Feature      | Test Case               | Expected Result         | Status |
+| ------------ | ----------------------- | ----------------------- | ------ |
+| Registration | Complete 4-step flow    | Redirect to dashboard   | ✅     |
+| Premium Calc | Mumbai, high risk       | Premium in ₹65-85 range | ✅     |
+| Trigger Sim  | Rain in Delhi           | Trigger created         | ✅     |
+| Auto-Claim   | Worker in affected city | Claim auto-created      | ✅     |
+| Fraud Check  | High-risk claim         | Marked as fraud         | ✅     |
+| Payment      | Approve pending claim   | Status = paid           | ✅     |
 
 ### 8.2 Edge Case Testing
 
-| Case | Scenario | Expected | Status |
-|------|----------|----------|--------|
-| No Policy | Create claim without policy | Error message | ✅ |
-| Duplicate Claim | Same trigger twice | Detect duplicate | ✅ |
-| Network Drop | GPS unavailable | Graceful handling | ✅ |
-| New Worker | Register < 7 days | Higher scrutiny | ✅ |
+| Case            | Scenario                    | Expected          | Status |
+| --------------- | --------------------------- | ----------------- | ------ |
+| No Policy       | Create claim without policy | Error message     | ✅     |
+| Duplicate Claim | Same trigger twice          | Detect duplicate  | ✅     |
+| Network Drop    | GPS unavailable             | Graceful handling | ✅     |
+| New Worker      | Register < 7 days           | Higher scrutiny   | ✅     |
 
 ---
 
@@ -580,23 +617,23 @@ analyzeFraud(claim) {
 
 ### Required for Phase 2
 
-| Deliverable | Status | Link |
-|-------------|--------|------|
-| 2-minute Demo Video | ⏳ Pending | [Add Link] |
-| Source Code | ✅ Complete | GitHub Repo |
-| README Update | ✅ Complete | Phase 2 Section |
+| Deliverable         | Status      | Link            |
+| ------------------- | ----------- | --------------- |
+| 2-minute Demo Video | ⏳ Pending  | [Add Link]      |
+| Source Code         | ✅ Complete | GitHub Repo     |
+| README Update       | ✅ Complete | Phase 2 Section |
 
 ### Phase 2 Features Demonstrated
 
-| Feature | Demo Point | Status |
-|---------|-----------|--------|
-| Registration Process | 0:15-0:30 | ✅ |
-| Policy Management | 0:30-0:45 | ✅ |
-| Dynamic Premium | 0:30-0:45 | ✅ |
-| Claims Management | 1:20-1:40 | ✅ |
-| Auto-Trigger System | 1:00-1:20 | ✅ |
-| Fraud Detection | 1:00-1:20 | ✅ |
-| Payment Processing | 1:40-2:00 | ✅ |
+| Feature              | Demo Point | Status |
+| -------------------- | ---------- | ------ |
+| Registration Process | 0:15-0:30  | ✅     |
+| Policy Management    | 0:30-0:45  | ✅     |
+| Dynamic Premium      | 0:30-0:45  | ✅     |
+| Claims Management    | 1:20-1:40  | ✅     |
+| Auto-Trigger System  | 1:00-1:20  | ✅     |
+| Fraud Detection      | 1:00-1:20  | ✅     |
+| Payment Processing   | 1:40-2:00  | ✅     |
 
 ---
 
@@ -604,35 +641,35 @@ analyzeFraud(claim) {
 
 ### Application Performance
 
-| Metric | Value | Target |
-|--------|-------|--------|
-| Page Load | < 2s | ✅ Pass |
-| API Response | < 500ms | ✅ Pass |
-| Registration Flow | < 30s | ✅ Pass |
-| Claim Creation | < 1s | ✅ Pass |
-| Fraud Check | < 100ms | ✅ Pass |
+| Metric            | Value   | Target  |
+| ----------------- | ------- | ------- |
+| Page Load         | < 2s    | ✅ Pass |
+| API Response      | < 500ms | ✅ Pass |
+| Registration Flow | < 30s   | ✅ Pass |
+| Claim Creation    | < 1s    | ✅ Pass |
+| Fraud Check       | < 100ms | ✅ Pass |
 
 ### Code Quality
 
-| Metric | Value |
-|--------|-------|
-| TypeScript Errors | 0 |
-| Lint Warnings | 0 |
-| Console Errors | 0 |
-| Dead Code | Minimal |
+| Metric            | Value   |
+| ----------------- | ------- |
+| TypeScript Errors | 0       |
+| Lint Warnings     | 0       |
+| Console Errors    | 0       |
+| Dead Code         | Minimal |
 
 ---
 
 ## 📊 Phase 2 Statistics
 
-| Metric | Value |
-|--------|-------|
-| **Files Modified** | 8 |
-| **Lines Added** | ~500 |
-| **Triggers Added** | 4 |
-| **Platforms Added** | 4 |
-| **New Features** | 6 |
-| **Bug Fixes** | 3 |
+| Metric              | Value |
+| ------------------- | ----- |
+| **Files Modified**  | 8     |
+| **Lines Added**     | ~500  |
+| **Triggers Added**  | 4     |
+| **Platforms Added** | 4     |
+| **New Features**    | 6     |
+| **Bug Fixes**       | 3     |
 
 ---
 
@@ -640,12 +677,12 @@ analyzeFraud(claim) {
 
 ### What's Ready for Phase 3
 
-| Phase 2 Output | Phase 3 Input |
-|----------------|---------------|
-| Complete workflow | Full system baseline |
-| Demo video | Template for final video |
-| Tested features | Stable foundation |
-| Known gaps | Clear roadmap |
+| Phase 2 Output    | Phase 3 Input            |
+| ----------------- | ------------------------ |
+| Complete workflow | Full system baseline     |
+| Demo video        | Template for final video |
+| Tested features   | Stable foundation        |
+| Known gaps        | Clear roadmap            |
 
 ### Phase 3 Focus Areas
 
@@ -677,11 +714,11 @@ analyzeFraud(claim) {
 
 ### Common Demo Issues
 
-| Issue | Prevention |
-|-------|------------|
-| Slow load | Close other tabs |
-| API errors | Check server running |
-| UI breaks | Test on target resolution |
+| Issue      | Prevention                |
+| ---------- | ------------------------- |
+| Slow load  | Close other tabs          |
+| API errors | Check server running      |
+| UI breaks  | Test on target resolution |
 
 ---
 
@@ -690,9 +727,11 @@ analyzeFraud(claim) {
 ### Week 1: Polish & Enhance (March 21-27)
 
 #### Day 1-2: Polish & Fix (March 21-22)
+
 **Goal**: Clean up Phase 1 code, fix any issues
 
 **Tasks**:
+
 - [ ] Run `npm run build` and fix all errors
 - [ ] Run `npx tsc --noEmit` and fix TypeScript errors
 - [ ] Review and enhance registration UI
@@ -702,9 +741,11 @@ analyzeFraud(claim) {
 **Time Estimate**: 4-6 hours
 
 #### Day 3-4: Demo Enhancements (March 23-24)
+
 **Goal**: Make demo flow visible and impressive
 
 **Tasks**:
+
 - [ ] Add real-time trigger widget to dashboard
 - [ ] Create auto-claim notification component
 - [ ] Add claim status timeline visualization
@@ -714,9 +755,11 @@ analyzeFraud(claim) {
 **Time Estimate**: 6-8 hours
 
 #### Day 5-7: Testing & Refinement (March 25-27)
+
 **Goal**: Ensure everything works flawlessly
 
 **Tasks**:
+
 - [ ] Full end-to-end testing
 - [ ] Demo flow dry runs (minimum 5 times)
 - [ ] Performance optimization
@@ -730,9 +773,11 @@ analyzeFraud(claim) {
 ### Week 2: Demo & Submit (March 28 - April 4)
 
 #### Day 1-2: Video Preparation (March 28-29)
+
 **Goal**: Prepare everything for recording
 
 **Tasks**:
+
 - [ ] Finalize demo script (based on template below)
 - [ ] Set up OBS Studio or Loom
 - [ ] Prepare demo data reset script
@@ -742,9 +787,11 @@ analyzeFraud(claim) {
 **Time Estimate**: 3-4 hours
 
 #### Day 3-4: Recording (March 30-31)
+
 **Goal**: Record professional demo video
 
 **Tasks**:
+
 - [ ] Record primary demo (2 minutes)
 - [ ] Record 2-3 backup takes
 - [ ] Review recordings
@@ -755,9 +802,11 @@ analyzeFraud(claim) {
 **Time Estimate**: 4-6 hours
 
 #### Day 5-7: Submission (April 1-4)
+
 **Goal**: Complete Phase 2 submission
 
 **Tasks**:
+
 - [ ] Upload video to YouTube/Vimeo/Loom
 - [ ] Set video to public/unlisted
 - [ ] Copy video link
@@ -776,8 +825,8 @@ analyzeFraud(claim) {
 
 ```
 [TIMESTAMP: 0:00-0:15] INTRO
-"Welcome to GigShield - AI-powered protection for India's 
- delivery workers. Our platform automatically protects 
+"Welcome to GigShield - AI-powered protection for India's
+ delivery workers. Our platform automatically protects
  gig workers from weather-related income loss."
 
 [TIMESTAMP: 0:15-0:30] REGISTRATION
@@ -828,6 +877,7 @@ analyzeFraud(claim) {
 ## 🛠️ Technical Implementation Checklist
 
 ### Code Quality
+
 - [ ] No TypeScript errors
 - [ ] No console errors
 - [ ] All imports resolved
@@ -835,6 +885,7 @@ analyzeFraud(claim) {
 - [ ] Loading states for async operations
 
 ### UI/UX
+
 - [ ] Responsive on mobile
 - [ ] Smooth animations
 - [ ] Clear error messages
@@ -842,6 +893,7 @@ analyzeFraud(claim) {
 - [ ] Success notifications
 
 ### Demo-Specific
+
 - [ ] Reset demo data function
 - [ ] Clear "before" state
 - [ ] Visible workflow steps
@@ -854,12 +906,12 @@ analyzeFraud(claim) {
 
 ### Recommended Tools
 
-| Tool | Purpose | Cost |
-|------|---------|------|
-| OBS Studio | Screen recording | Free |
-| Loom | Quick recording + hosting | Free tier |
-| Zoom | Recording + hosting | Free tier |
-| Camtasia | Professional editing | Paid |
+| Tool       | Purpose                   | Cost      |
+| ---------- | ------------------------- | --------- |
+| OBS Studio | Screen recording          | Free      |
+| Loom       | Quick recording + hosting | Free tier |
+| Zoom       | Recording + hosting       | Free tier |
+| Camtasia   | Professional editing      | Paid      |
 
 ### Recording Settings
 
@@ -883,17 +935,20 @@ Format: MP4 (H.264)
 ## 🔗 Video Hosting Options
 
 ### YouTube (Recommended)
+
 - Free unlimited hosting
 - Easy embedding
 - Public or unlisted
 - Analytics included
 
 ### Vimeo
+
 - Better privacy controls
 - Cleaner player
 - Free tier limited
 
 ### Loom
+
 - Quick sharing
 - In-browser recording
 - Built-in hosting
@@ -902,38 +957,38 @@ Format: MP4 (H.264)
 
 ## 📊 Success Metrics
 
-| Metric | Target | Deadline |
-|--------|--------|----------|
-| Demo Video | 2:00-2:30 | April 1 |
-| Code Quality | 0 errors | March 27 |
-| UI Polish | Professional | March 27 |
-| Documentation | Complete | March 30 |
-| Submission | On time | April 4 |
+| Metric        | Target       | Deadline |
+| ------------- | ------------ | -------- |
+| Demo Video    | 2:00-2:30    | April 1  |
+| Code Quality  | 0 errors     | March 27 |
+| UI Polish     | Professional | March 27 |
+| Documentation | Complete     | March 30 |
+| Submission    | On time      | April 4  |
 
 ---
 
 ## ⚠️ Risk Mitigation
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| Video too long | Medium | Low | Practice timing |
-| Demo fails | Low | High | Backup recording |
-| Upload fails | Low | Medium | Multiple hosting |
-| Submission late | Low | High | Early submission |
+| Risk            | Likelihood | Impact | Mitigation       |
+| --------------- | ---------- | ------ | ---------------- |
+| Video too long  | Medium     | Low    | Practice timing  |
+| Demo fails      | Low        | High   | Backup recording |
+| Upload fails    | Low        | Medium | Multiple hosting |
+| Submission late | Low        | High   | Early submission |
 
 ---
 
 ## 📞 Team Responsibilities
 
-| Task | Assign To | Deadline |
-|------|----------|----------|
-| Code polish | Developer 1 | March 22 |
-| UI enhancements | Developer 2 | March 24 |
-| Demo script | Team Lead | March 25 |
-| Recording | Assign randomly | March 31 |
-| Editing | Developer 1 | April 1 |
-| Submission | Team Lead | April 4 |
+| Task            | Assign To       | Deadline |
+| --------------- | --------------- | -------- |
+| Code polish     | Developer 1     | March 22 |
+| UI enhancements | Developer 2     | March 24 |
+| Demo script     | Team Lead       | March 25 |
+| Recording       | Assign randomly | March 31 |
+| Editing         | Developer 1     | April 1  |
+| Submission      | Team Lead       | April 4  |
 
 ---
 
-*Phase 2 Documentation - GigShield DEVTrails 2026*
+_Phase 2 Documentation - GigShield DEVTrails 2026_

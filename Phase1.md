@@ -23,12 +23,15 @@
 ## 1. Overview
 
 ### What We Did
+
 Built the foundational architecture for GigShield - an AI-powered parametric insurance platform for India's gig economy workers. This phase focused on ideation, planning, and establishing the core infrastructure.
 
 ### Why We Did It
+
 The problem statement highlighted that gig workers (Zomato, Swiggy, Zepto, Amazon, Dunzo) lose 20-30% of monthly earnings due to uncontrollable external disruptions. There was no existing protection for these workers against weather, pollution, or social disruptions.
 
 ### How We Did It
+
 - Conducted extensive research on gig worker pain points
 - Identified 9 parametric triggers causing income loss
 - Designed a weekly pricing model aligned with gig worker earnings cycle
@@ -39,6 +42,7 @@ The problem statement highlighted that gig workers (Zomato, Swiggy, Zepto, Amazo
 ## 2. Problem Analysis
 
 ### The Challenge
+
 ```
 India's platform-based delivery partners face:
 ├── 20-30% monthly income loss from weather disruptions
@@ -48,6 +52,7 @@ India's platform-based delivery partners face:
 ```
 
 ### Our Approach
+
 1. **Persona Focus**: Targeted food delivery partners (Zomato/Swiggy)
    - Why: Highest exposure to weather conditions
    - Why: Predictable disruption patterns
@@ -103,12 +108,12 @@ India's platform-based delivery partners face:
 
 ### Why This Architecture
 
-| Component | Choice | Rationale |
-|-----------|--------|-----------|
-| **Frontend** | Next.js 14 | App Router, Server Components, Fast SEO |
-| **Styling** | Tailwind CSS | Rapid development, consistent design |
-| **State** | In-memory Map | Simplicity for demo, no setup required |
-| **API** | Next.js Routes | Unified codebase, easy deployment |
+| Component    | Choice         | Rationale                               |
+| ------------ | -------------- | --------------------------------------- |
+| **Frontend** | Next.js 14     | App Router, Server Components, Fast SEO |
+| **Styling**  | Tailwind CSS   | Rapid development, consistent design    |
+| **State**    | In-memory Map  | Simplicity for demo, no setup required  |
+| **API**      | Next.js Routes | Unified codebase, easy deployment       |
 
 ---
 
@@ -119,11 +124,13 @@ India's platform-based delivery partners face:
 **What**: 4-step registration wizard for new workers
 
 **Why**:
+
 - Simplifies onboarding (complex forms lose users)
 - Captures essential data for premium calculation
 - Provides instant premium preview
 
 **How**:
+
 ```
 Step 1: Personal Info → Name, Phone, Email, Aadhaar
 Step 2: Platform & City → Partner selection, Location
@@ -134,6 +141,7 @@ Step 4: Premium Preview → Real-time AI calculation
 **Code Location**: `src/app/register/page.tsx`
 
 **Key Features**:
+
 - City-based risk zone classification
 - Platform selection (Zomato, Swiggy, Zepto, Blinkit, Amazon, Dunzo)
 - Dynamic premium calculation on-the-fly
@@ -146,11 +154,13 @@ Step 4: Premium Preview → Real-time AI calculation
 **What**: Personalized dashboard for each worker
 
 **Why**:
+
 - Workers need to see their coverage status
 - Displays real-time weather and risk information
 - Shows claim history and protected earnings
 
 **How**:
+
 - Queries worker data from store
 - Fetches city-specific weather
 - Displays active triggers affecting the worker's zone
@@ -159,6 +169,7 @@ Step 4: Premium Preview → Real-time AI calculation
 **Code Location**: `src/app/dashboard/page.tsx`
 
 **Sections**:
+
 - Policy details card
 - Real-time weather monitor
 - Risk insights panel
@@ -172,11 +183,13 @@ Step 4: Premium Preview → Real-time AI calculation
 **What**: Central hub for viewing and managing claims
 
 **Why**:
+
 - Workers need transparency on claim status
 - Admin needs tools to approve/reject claims
 - Fraud detection results need to be visible
 
 **How**:
+
 - Table with search and filter capabilities
 - Detailed claim view modal
 - One-click approve and pay functionality
@@ -185,6 +198,7 @@ Step 4: Premium Preview → Real-time AI calculation
 **Code Location**: `src/app/claims/page.tsx`
 
 **Features**:
+
 - Search by claim ID, worker name, or city
 - Filter by status (pending, approved, paid, fraud)
 - Filter by trigger type (all 9 types)
@@ -197,6 +211,7 @@ Step 4: Premium Preview → Real-time AI calculation
 **What**: Comprehensive admin panel for platform management
 
 **Why**:
+
 - Platform operators need analytics
 - Need ability to simulate weather events
 - Require fraud monitoring tools
@@ -206,6 +221,7 @@ Step 4: Premium Preview → Real-time AI calculation
 **Code Location**: `src/app/admin/page.tsx`
 
 **Tabs**:
+
 1. **Overview**: Stats, charts, active triggers
 2. **Workers**: Worker distribution, platform breakdown
 3. **Simulation**: Weather event simulator
@@ -220,11 +236,13 @@ Step 4: Premium Preview → Real-time AI calculation
 **What**: Using Map-based in-memory store instead of database
 
 **Why**:
+
 - Phase 1 demo - no database setup needed
 - Fast development and testing
 - Easy to reset for demo purposes
 
 **Why NOT** (for future):
+
 - Data loss on server restart
 - No persistence
 - Can't scale horizontally
@@ -245,11 +263,13 @@ const claims = new Map<string, Claim>();
 **What**: Dynamic premium calculation based on multiple factors
 
 **Why**:
+
 - Problem statement mandates weekly pricing
 - Gig workers operate week-to-week
 - Aligns with typical payout cycle
 
 **Pricing Formula**:
+
 ```
 Final Premium = Base + Location + Activity + Behavior + Seasonal
 
@@ -273,11 +293,11 @@ Where:
 
 **Trigger Categories**:
 
-| Category | Triggers | Rationale |
-|----------|----------|-----------|
-| **Environmental** | Rain, Heat, Pollution, Flood | Weather-related work stoppages |
-| **Social** | Curfew, Strike | External restrictions |
-| **Technical** | App Outage, Demand Surge, Traffic | Platform/urban disruptions |
+| Category          | Triggers                          | Rationale                      |
+| ----------------- | --------------------------------- | ------------------------------ |
+| **Environmental** | Rain, Heat, Pollution, Flood      | Weather-related work stoppages |
+| **Social**        | Curfew, Strike                    | External restrictions          |
+| **Technical**     | App Outage, Demand Surge, Traffic | Platform/urban disruptions     |
 
 **Code Location**: `src/lib/triggers/weather-trigger.ts`
 
@@ -290,11 +310,13 @@ Where:
 **What**: AI-powered dynamic premium calculation
 
 **Why**:
+
 - Personalized pricing based on individual risk factors
 - Fair pricing that doesn't overcharge low-risk workers
 - Incentivizes good behavior
 
 **How**:
+
 ```typescript
 // Input Features
 - Worker location (lat/lng)
@@ -320,11 +342,13 @@ Where:
 **What**: Predictive risk modeling for each worker
 
 **Why**:
+
 - Anticipate weather events before they happen
 - Provide proactive recommendations
 - Help workers plan their coverage
 
 **How**:
+
 - Weather forecasting for 7 days
 - Claim probability calculation
 - Payout prediction models
@@ -341,6 +365,7 @@ Where:
 **What**: Three-layer fraud detection architecture
 
 **Why**:
+
 - Single-layer detection is easily bypassed
 - Coordinated fraud requires pattern analysis
 - Need to balance user experience with security
@@ -373,11 +398,13 @@ Layer 3: Duplicate Prevention
 **What**: Detection of fake GPS locations
 
 **Why**:
+
 - Problem statement highlighted GPS spoofing syndicate
 - Common attack vector for insurance fraud
 - Easy to implement with coordinate analysis
 
 **How**:
+
 ```typescript
 // Check 1: Distance from registered location
 if (distance > 5km) flag as suspicious
@@ -396,11 +423,13 @@ if (new location never visited before) flag for review
 **What**: Detection of coordinated fraud attacks
 
 **Why**:
+
 - Problem statement mentioned 500-worker syndicate
 - Individual detection can't catch coordinated attacks
 - Need to identify patterns across multiple claims
 
 **How**:
+
 ```typescript
 // Check 1: Clustering
 if (multiple claims at same location/time) flag as ring
@@ -421,6 +450,7 @@ if (same trigger + same location + similar amounts) flag as ring
 **What**: Urgent addition to address GPS spoofing threat
 
 **Why**:
+
 - Competition announced sophisticated fraud syndicate
 - Simple GPS verification deemed obsolete
 - Need multi-signal verification approach
@@ -431,24 +461,26 @@ if (same trigger + same location + similar amounts) flag as ring
 
 **What**: Beyond GPS location verification
 
-| Signal | Genuine Worker | Spoofed Actor |
-|--------|---------------|---------------|
-| GPS + Network | Location matches cell tower + WiFi | GPS shows zone, network shows different |
-| Velocity Check | Movement matches delivery patterns | Impossible teleport between locations |
-| App Session | Active order with context | No active session or stale data |
-| Historical | Consistent with work history | First claim in zone, no prior visits |
-| Weather | Actual conditions match | Claims in area with no disruption |
+| Signal         | Genuine Worker                     | Spoofed Actor                           |
+| -------------- | ---------------------------------- | --------------------------------------- |
+| GPS + Network  | Location matches cell tower + WiFi | GPS shows zone, network shows different |
+| Velocity Check | Movement matches delivery patterns | Impossible teleport between locations   |
+| App Session    | Active order with context          | No active session or stale data         |
+| Historical     | Consistent with work history       | First claim in zone, no prior visits    |
+| Weather        | Actual conditions match            | Claims in area with no disruption       |
 
 ### 8.3 UX Balance
 
 **What**: Handling flagged claims without penalizing honest workers
 
 **Why**:
+
 - Network drops happen in bad weather
 - False positives damage trust
 - Need graceful degradation
 
 **Solution**:
+
 ```
 Flagged Claim Flow:
 1. Claim filed → Run fraud checks
@@ -467,7 +499,8 @@ Flagged Claim Flow:
 
 **Problem**: 3-hour hackathon timeline
 
-**Solution**: 
+**Solution**:
+
 - Prioritized core features
 - Used in-memory store for speed
 - Leveraged Next.js for rapid development
@@ -479,6 +512,7 @@ Flagged Claim Flow:
 **Problem**: Supporting 6+ delivery platforms
 
 **Solution**:
+
 - Abstracted platform selection in registration
 - Added platform-specific multipliers in premium calc
 - Simulated platform APIs for demo
@@ -490,6 +524,7 @@ Flagged Claim Flow:
 **Problem**: Balancing false positives and negatives
 
 **Solution**:
+
 - Multi-layer detection reduces single-point failures
 - Graduated risk scoring (none/low/medium/high)
 - Manual review option for edge cases
@@ -500,28 +535,28 @@ Flagged Claim Flow:
 
 ### Phase 1 Submission
 
-| Deliverable | Status | Location |
-|-------------|--------|----------|
-| Idea Document (README) | ✅ Complete | `README.md` |
-| Git Repository | ✅ Ready | GitHub link in README |
-| Core Features | ✅ Complete | All pages functional |
-| Adversarial Defense | ✅ Complete | README Section 8 |
-| AI/ML Integration | ✅ Complete | 3 AI modules |
+| Deliverable            | Status      | Location              |
+| ---------------------- | ----------- | --------------------- |
+| Idea Document (README) | ✅ Complete | `README.md`           |
+| Git Repository         | ✅ Ready    | GitHub link in README |
+| Core Features          | ✅ Complete | All pages functional  |
+| Adversarial Defense    | ✅ Complete | README Section 8      |
+| AI/ML Integration      | ✅ Complete | 3 AI modules          |
 
 ---
 
 ## 📊 Statistics
 
-| Metric | Value |
-|--------|-------|
-| **Files Created** | 25+ |
-| **API Routes** | 5 |
-| **Pages** | 5 (Landing, Register, Dashboard, Claims, Admin) |
-| **AI Modules** | 3 (Premium, Fraud, Risk) |
-| **Parametric Triggers** | 9 |
-| **Delivery Platforms** | 6 |
-| **Cities Supported** | 10 |
-| **Lines of Code** | ~3,000 |
+| Metric                  | Value                                           |
+| ----------------------- | ----------------------------------------------- |
+| **Files Created**       | 25+                                             |
+| **API Routes**          | 5                                               |
+| **Pages**               | 5 (Landing, Register, Dashboard, Claims, Admin) |
+| **AI Modules**          | 3 (Premium, Fraud, Risk)                        |
+| **Parametric Triggers** | 9                                               |
+| **Delivery Platforms**  | 6                                               |
+| **Cities Supported**    | 10                                              |
+| **Lines of Code**       | ~3,000                                          |
 
 ---
 
@@ -540,11 +575,13 @@ Flagged Claim Flow:
 ## ➡️ Next Steps
 
 ### Phase 2 Preparation
+
 - Record 2-minute demo video
 - Enhance demo flow with auto-claim notifications
 - Add real-time trigger widget to dashboard
 
 ### Phase 3 Preparation
+
 - Advanced fraud detection improvements
 - Real payment gateway integration
 - Final pitch deck creation
@@ -558,18 +595,21 @@ Flagged Claim Flow:
 ### Week 1 (March 21-27)
 
 #### Day 1-2: Polish & Enhance
+
 - [ ] Review and fix any TypeScript errors
 - [ ] Enhance registration UI for better demo
 - [ ] Add real-time trigger widget to dashboard
 - [ ] Improve claims page with better filters
 
 #### Day 3-4: Demo Flow
+
 - [ ] Create visible auto-claim indicators
 - [ ] Add claim status timeline visualization
 - [ ] Enhance admin simulation UI
 - [ ] Add success notifications
 
 #### Day 5-7: Testing
+
 - [ ] Full end-to-end testing
 - [ ] Demo flow dry runs
 - [ ] Performance optimization
@@ -578,18 +618,21 @@ Flagged Claim Flow:
 ### Week 2 (March 28 - April 4)
 
 #### Day 1-2: Video Preparation
+
 - [ ] Finalize demo script
 - [ ] Set up screen recording
 - [ ] Prepare demo data reset
 - [ ] Practice demo flow
 
 #### Day 3-4: Recording
+
 - [ ] Record primary demo (2 minutes)
 - [ ] Record backup demo
 - [ ] Review and trim
 - [ ] Add narration if needed
 
 #### Day 5-7: Submission
+
 - [ ] Upload video to hosting
 - [ ] Update README with video link
 - [ ] Final code cleanup
@@ -599,24 +642,26 @@ Flagged Claim Flow:
 
 ## 📊 Phase 2 Success Metrics
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| Demo Video Length | 2:00-2:30 | ⏳ |
-| Demo Flow Coverage | All features | ⏳ |
-| UI Polish | Professional look | ⏳ |
-| Code Quality | 0 errors | ⏳ |
-| Documentation | Complete | ⏳ |
+| Metric             | Target            | Status |
+| ------------------ | ----------------- | ------ |
+| Demo Video Length  | 2:00-2:30         | ⏳     |
+| Demo Flow Coverage | All features      | ⏳     |
+| UI Polish          | Professional look | ⏳     |
+| Code Quality       | 0 errors          | ⏳     |
+| Documentation      | Complete          | ⏳     |
 
 ---
 
 ## 🎯 Phase 2 Deliverables
 
 ### Required (Phase Requirements)
+
 - [ ] 2-minute demo video (MP4)
 - [ ] Publicly accessible video link
 - [ ] Source code submission
 
 ### Optional (For Better Rating)
+
 - [ ] Enhanced UI animations
 - [ ] Real-time notifications
 - [ ] Interactive demo
@@ -666,13 +711,13 @@ OUTRO (2:00)
 
 ### Items to Address in Phase 2
 
-| Item | Priority | Effort |
-|------|---------|--------|
-| Mobile responsive fixes | High | Low |
-| Loading state improvements | Medium | Low |
-| Error message improvements | Medium | Low |
-| Performance optimization | Low | Medium |
+| Item                       | Priority | Effort |
+| -------------------------- | -------- | ------ |
+| Mobile responsive fixes    | High     | Low    |
+| Loading state improvements | Medium   | Low    |
+| Error message improvements | Medium   | Low    |
+| Performance optimization   | Low      | Medium |
 
 ---
 
-*Phase 1 Documentation - GigShield DEVTrails 2026*
+_Phase 1 Documentation - GigShield DEVTrails 2026_

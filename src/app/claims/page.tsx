@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getClaims, getWorker, updateClaim, getClaimsByWorker, getPolicies, getWorkers } from '@/lib/store';
-import { processPayment } from '@/lib/integrations/payment-sim';
+import { processPayment, getActiveGateway, isRazorpayAvailable } from '@/lib/integrations/payment-service';
 import { analyzeFraud } from '@/lib/ai/fraud-detector';
 import { advancedFraudCheck, getFraudSummary } from '@/lib/ai/advanced-fraud-detector';
 import { exportClaimsToCSV } from '@/lib/utils/csv-export';
